@@ -36,10 +36,10 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
             type: 'website',
             images: [
                 {
-                    url: 'https://camille-osteopathe.com/images/photos/camille-51%20-%20Grande.jpeg',
+                    url: '/images/photos/opengraph-image.jpg',
                     width: 1200,
                     height: 630,
-                    alt: 'Thérapie Trauma & Ostéopathie Somatique - Camille Labasse',
+                    alt: 'Camille Labasse - Traitement des Traumatismes',
                 }
             ],
         },
@@ -47,7 +47,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
             card: 'summary_large_image',
             title: titles[locale as keyof typeof titles] || titles.fr,
             description: descriptions[locale as keyof typeof descriptions] || descriptions.fr,
-            images: ['https://camille-osteopathe.com/images/photos/camille-51%20-%20Grande.jpeg'],
+            images: ['/images/photos/opengraph-image.jpg'],
         },
         robots: {
             index: true,
