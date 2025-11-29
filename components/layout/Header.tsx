@@ -1,6 +1,6 @@
 "use client";
 
-import { Link } from "@/i18n/routing";
+import { Link, usePathname } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -10,6 +10,7 @@ import LanguageSwitcher from "./LanguageSwitcher";
 
 export default function Header({ locale }: { locale: string }) {
     const t = useTranslations("Navigation");
+    const pathname = usePathname();
     const [isOpen, setIsOpen] = useState(false);
 
     const navItems = [
@@ -29,15 +30,21 @@ export default function Header({ locale }: { locale: string }) {
 
                 {/* Desktop Nav */}
                 <nav className="hidden md:flex items-center gap-8">
-                    {navItems.map((item) => (
-                        <Link
-                            key={item.href}
-                            href={item.href}
-                            className="text-sm font-medium text-muted-foreground transition-smooth hover:text-primary animated-underline"
-                        >
-                            {item.label}
-                        </Link>
-                    ))}
+                    {navItems.map((item) => {
+                        const isActive = pathname === item.href;
+                        return (
+                            <Link
+                                key={item.href}
+                                href={item.href}
+                                className={`text-sm font-medium transition-smooth animated-underline ${isActive
+                                    ? "text-primary font-semibold"
+                                    : "text-muted-foreground hover:text-primary"
+                                    }`}
+                            >
+                                {item.label}
+                            </Link>
+                        );
+                    })}
                     <LanguageSwitcher locale={locale} />
                     <Button asChild className="gradient-warm hover:shadow-glow text-white rounded-full px-6 transition-smooth hover-scale">
                         <Link href="/contact">{t("bookAppointment")}</Link>
