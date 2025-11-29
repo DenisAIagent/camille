@@ -38,7 +38,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       template: `%s | Camille Labasse Ostéopathe`
     },
     description,
-    metadataBase: new URL('https://camille-osteopathe.com'),
+    metadataBase: new URL('https://camille-alpha.vercel.app'),
     alternates: {
       canonical: `/${locale}`,
       languages: {
@@ -50,13 +50,13 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     openGraph: {
       title,
       description,
-      url: `https://camille-osteopathe.com/${locale}`,
+      url: `/${locale}`,
       siteName: 'Camille Labasse Ostéopathe',
       locale: locale,
       type: 'website',
       images: [
         {
-          url: 'https://camille-osteopathe.com/images/photos/opengraph-image.jpg',
+          url: '/images/photos/opengraph-image.jpg',
           width: 1200,
           height: 630,
           alt: 'Camille Labasse Ostéopathe Lisbonne',
@@ -67,7 +67,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       card: 'summary_large_image',
       title,
       description,
-      images: ['https://camille-osteopathe.com/images/photos/opengraph-image.jpg'],
+      images: ['/images/photos/opengraph-image.jpg'],
     },
     robots: {
       index: true,
