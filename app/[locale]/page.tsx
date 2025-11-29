@@ -41,12 +41,18 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       alternateLocale: ['fr', 'pt', 'en'].filter(l => l !== locale),
       images: [
         {
-          url: 'https://camille-osteopathe.com/images/photos/camille-01%20-%20Grande.jpeg',
+          url: '/images/photos/opengraph-image.jpg',
           width: 1200,
           height: 630,
           alt: 'Camille Labasse - Ostéopathe Lisbonne',
         }
       ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: titles[locale as keyof typeof titles] || titles.fr,
+      description: descriptions[locale as keyof typeof descriptions] || descriptions.fr,
+      images: ['/images/photos/opengraph-image.jpg'],
     },
     robots: {
       index: true,
