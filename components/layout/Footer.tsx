@@ -3,7 +3,7 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 
 export default function Footer({ locale }: { locale: string }) {
-    const _t = useTranslations("ContactPage");
+    const t = useTranslations("ContactPage");
 
     return (
         <footer className="relative bg-gradient-to-b from-muted/30 to-muted/50 border-t border-primary/10 py-16 mt-24 overflow-hidden">

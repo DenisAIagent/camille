@@ -13,7 +13,7 @@ interface CategoryContent {
 }
 
 export default function WhoIsItFor() {
-    const _t = useTranslations('HomePage');
+    const t = useTranslations('HomePage');
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
     const categories = [

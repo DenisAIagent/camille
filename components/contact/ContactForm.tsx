@@ -24,7 +24,7 @@ interface ContactFormProps {
 }
 
 export default function ContactForm({ onSuccess }: ContactFormProps) {
-    const _t = useTranslations("ContactPage");
+    const t = useTranslations("ContactPage");
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const formSchema = z.object({

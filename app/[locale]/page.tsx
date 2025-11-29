@@ -64,7 +64,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 }
 
 export default function HomePage() {
-  const _t = useTranslations('HomePage');
+  const t = useTranslations('HomePage');
 
   return (
     <div className="flex flex-col">

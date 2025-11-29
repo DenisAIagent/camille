@@ -1,7 +1,7 @@
 import { getTranslations } from 'next-intl/server';
 import { Metadata } from 'next';
 import { Link } from '@/i18n/routing';
-// import FeatureBlock from '@/components/ui/FeatureBlock';
+import FeatureBlock from '@/components/ui/FeatureBlock';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
     const { locale } = await params;
@@ -66,7 +66,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
 export default async function OsteopathyPage({ params }: { params: Promise<{ locale: string }> }) {
     const { locale } = await params;
-    const _t = await getTranslations({ locale, namespace: 'OsteopathyPage' });
+    const t = await getTranslations({ locale, namespace: 'OsteopathyPage' });
 
     return (
         <div className="flex flex-col">

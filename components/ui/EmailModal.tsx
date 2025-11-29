@@ -11,7 +11,7 @@ interface EmailModalProps {
 }
 
 export default function EmailModal({ isOpen, onClose }: EmailModalProps) {
-    const _t = useTranslations('ContactModals.email');
+    const t = useTranslations('ContactModals.email');
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -179,7 +179,7 @@ export default function EmailModal({ isOpen, onClose }: EmailModalProps) {
                                 <div className="flex justify-center">
                                     <HCaptcha
                                         ref={captchaRef}
-                                        sitekey={hcaptchaSiteKey}
+                                        sitekey={hcaptchaSiteKey!}
                                         onVerify={onCaptchaVerify}
                                         onExpire={onCaptchaExpire}
                                     />

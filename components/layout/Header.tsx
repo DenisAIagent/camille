@@ -9,7 +9,7 @@ import { useState } from "react";
 import LanguageSwitcher from "./LanguageSwitcher";
 
 export default function Header({ locale }: { locale: string }) {
-    const _t = useTranslations("Navigation");
+    const t = useTranslations("Navigation");
     const [isOpen, setIsOpen] = useState(false);
 
     const navItems = [
