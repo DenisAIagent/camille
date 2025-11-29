@@ -56,7 +56,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       type: 'website',
       images: [
         {
-          url: '/images/photos/camille-01 - Grande.jpeg',
+          url: '/images/photos/opengraph-image.jpg',
           width: 1200,
           height: 630,
           alt: 'Camille Labasse Ostéopathe Lisbonne',
@@ -67,7 +67,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       card: 'summary_large_image',
       title,
       description,
-      images: ['/images/photos/camille-01 - Grande.jpeg'],
+      images: ['/images/photos/opengraph-image.jpg'],
     },
     robots: {
       index: true,
