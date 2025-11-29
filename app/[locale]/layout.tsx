@@ -8,6 +8,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import FloatingContactButtons from "@/components/ui/FloatingContactButtons";
 import BackToTop from "@/components/ui/BackToTop";
+import SkipToContent from "@/components/ui/SkipToContent";
 import { Toaster } from "sonner";
 
 const outfit = Outfit({ subsets: ['latin'], variable: '--font-sans' });
@@ -112,8 +113,9 @@ export default async function LocaleLayout({
     <html lang={locale} suppressHydrationWarning>
       <body className={`${outfit.variable} ${playfair.variable} ${jetbrainsMono.variable} antialiased min-h-screen flex flex-col bg-background text-foreground font-sans`}>
         <NextIntlClientProvider messages={messages}>
+          <SkipToContent />
           <Header locale={locale} />
-          <main className="flex-1">
+          <main id="main-content" className="flex-1">
             {children}
           </main>
           <Footer locale={locale} />
