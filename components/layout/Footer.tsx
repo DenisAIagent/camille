@@ -96,15 +96,14 @@ export default function Footer({ locale }: { locale: string }) {
                 </div>
             </div>
 
-            {/* Schema.org LocalBusiness Structured Data */}
+            {/* Schema.org LocalBusiness / Physician */}
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{
                     __html: JSON.stringify({
                         "@context": "https://schema.org",
-                        "@type": ["MedicalBusiness", "HealthAndBeautyBusiness"],
-                        "@id": "https://camille-osteopathe.com/#organization",
-                        "name": "Camille Labasse - Ostéopathe D.O",
+                        "@type": "Physician",
+                        "name": "Camille Labasse Ostéopathe D.O",
                         "alternateName": "Camille Osteopatia Lisboa",
                         "url": `https://camille-osteopathe.com/${locale}`,
                         "logo": "https://camille-osteopathe.com/logo.png",
@@ -112,24 +111,23 @@ export default function Footer({ locale }: { locale: string }) {
                         "description": locale === 'fr'
                             ? "Cabinet d'ostéopathie biodynamique à Lisbonne. Consultations pour adultes, enfants, femmes enceintes et sportifs."
                             : locale === 'pt'
-                                ? "Consultório de osteopatia biodinâmica em Lisboa. Consultas para adultos, crianças, grávidas e atletas."
+                                ? "Consultório de osteopatia biodinâmica em Lisboa. Consultas para adultos, crianças, grávidas e desportistas."
                                 : "Biodynamic osteopathy practice in Lisbon. Consultations for adults, children, pregnant women and athletes.",
-                        "medicalSpecialty": "Osteopathy",
-                        "priceRange": "€€",
+                        "telephone": "+351930505939",
+                        "email": "camilleosteopatia@gmail.com",
+                        "priceRange": "60€-100€",
                         "address": {
                             "@type": "PostalAddress",
                             "streetAddress": "Avenida de Roma",
                             "addressLocality": "Lisboa",
-                            "postalCode": "1000-260",
-                            "addressCountry": "PT",
-                            "addressRegion": "Lisboa"
+                            "postalCode": "1000-000",
+                            "addressCountry": "PT"
                         },
                         "geo": {
                             "@type": "GeoCoordinates",
-                            "latitude": "38.7491",
-                            "longitude": "-9.1441"
+                            "latitude": "38.7436",
+                            "longitude": "-9.1436"
                         },
-                        "telephone": "+351930505939",
                         "openingHoursSpecification": [
                             {
                                 "@type": "OpeningHoursSpecification",
@@ -139,40 +137,9 @@ export default function Footer({ locale }: { locale: string }) {
                             }
                         ],
                         "sameAs": [
-                            "https://facebook.com/osteopatalisboa",
-                            "https://instagram.com/camilleosteopatalisboa"
-                        ],
-                        "availableLanguage": [
-                            { "@type": "Language", "name": "French", "alternateName": "fr" },
-                            { "@type": "Language", "name": "Portuguese", "alternateName": "pt" },
-                            { "@type": "Language", "name": "English", "alternateName": "en" }
-                        ],
-                        "hasOfferCatalog": {
-                            "@type": "OfferCatalog",
-                            "name": "Consultations d'ostéopathie",
-                            "itemListElement": [
-                                {
-                                    "@type": "Offer",
-                                    "itemOffered": {
-                                        "@type": "MedicalProcedure",
-                                        "name": "Consultation d'ostéopathie",
-                                        "procedureType": "Osteopathic Manipulation"
-                                    },
-                                    "price": "60",
-                                    "priceCurrency": "EUR"
-                                },
-                                {
-                                    "@type": "Offer",
-                                    "itemOffered": {
-                                        "@type": "MedicalProcedure",
-                                        "name": "Séance trauma biodynamique",
-                                        "procedureType": "Biodynamic Trauma Therapy"
-                                    },
-                                    "price": "80",
-                                    "priceCurrency": "EUR"
-                                }
-                            ]
-                        }
+                            "https://www.instagram.com/camille_osteopathe",
+                            "https://www.linkedin.com/in/camille-labasse"
+                        ]
                     })
                 }}
             />
