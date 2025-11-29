@@ -137,18 +137,18 @@ export default function HomePage() {
             <p className="text-xl md:text-2xl text-foreground/90 leading-relaxed max-w-3xl mx-auto mb-12 drop-shadow">
               {t('intro')}
             </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-6 items-center">
+            <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 items-center w-full px-4 sm:px-0">
               <Button
                 asChild
                 size="lg"
-                className="gradient-warm hover:shadow-glow text-white rounded-full px-12 py-7 text-lg h-auto transition-smooth hover-scale shadow-premium"
+                className="gradient-warm hover:shadow-glow text-white rounded-full px-8 sm:px-12 py-6 sm:py-7 text-base sm:text-lg h-auto transition-smooth hover-scale shadow-premium w-full sm:w-auto whitespace-normal text-center leading-tight"
               >
                 <Link href="/contact">{t('h2_book')}</Link>
               </Button>
               <Button
                 asChild
                 size="lg"
-                className="bg-transparent border-2 border-[#6a6546] text-[#6a6546] hover:bg-[#6a6546] hover:text-white rounded-full px-12 py-7 text-lg h-auto transition-smooth hover-scale shadow-premium"
+                className="bg-transparent border-2 border-[#6a6546] text-[#6a6546] hover:bg-[#6a6546] hover:text-white rounded-full px-8 sm:px-12 py-6 sm:py-7 text-base sm:text-lg h-auto transition-smooth hover-scale shadow-premium w-full sm:w-auto whitespace-normal text-center leading-tight"
               >
                 <Link href="/osteopathie">{t('h2_osteopathy')}</Link>
               </Button>
