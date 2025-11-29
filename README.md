@@ -225,8 +225,8 @@ chore: Tâches de maintenance
 
 Le site supporte 3 langues :
 
-- 🇫🇷 **Français** (défaut)
-- 🇵🇹 **Portugais**
+- �� **Portugais** (défaut)
+- �� **Français**
 - 🇬🇧 **Anglais**
 
 ### Ajouter une traduction
