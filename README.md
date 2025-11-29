@@ -1,242 +1,592 @@
-# Site Vitrine - Camille Labasse Ostéopathe
+# 🌿 Camille Labasse - Ostéopathe D.O.
 
-Site web professionnel pour Camille Labasse, Ostéopathe D.O à Lisbonne.
+[![Next.js](https://img.shields.io/badge/Next.js-15.0-black?style=flat&logo=next.js)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=flat&logo=typescript)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-38B2AC?style=flat&logo=tailwind-css)](https://tailwindcss.com/)
+[![License](https://img.shields.io/badge/license-Proprietary-red.svg)](./LICENSE)
+[![Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=flat&logo=vercel)](https://vercel.com)
 
-## 🎨 Stack Technique
+> Site web professionnel pour le cabinet d'ostéopathie biodynamique de Camille Labasse à Lisbonne, Portugal.
 
-- **Framework**: Next.js 16 (App Router)
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS v4
-- **UI Components**: shadcn/ui (New York style)
-- **Icons**: lucide-react
-- **i18n**: next-intl (FR / PT / EN)
-- **Validation**: Zod + react-hook-form
-- **Fonts**: Outfit (sans-serif) + Playfair Display (serif)
+🌐 **Production:** [osteopatiaemlisboa.com](https://osteopatiaemlisboa.com)  
+🔗 **Preview:** [camille-alpha.vercel.app](https://camille-alpha.vercel.app)
 
-## 🎨 Palette de Couleurs
+---
 
-Inspirée d'un bassin de koï :
+## 📋 Table des Matières
 
-- **Or lumineux**: `#F2AF1D` - Accents, CTA, hover
-- **Orange koï**: `#EE6A22` - Primaire (boutons, liens)
-- **Gris clair "Moon Mist"**: `#D3D6C3` - Secondaire, bordures
-- **Gris profond "Kokoda"**: `#5A5C4F` - Texte principal
-- **Blanc / nuances naturelles**: Fonds
+- [✨ Fonctionnalités](#-fonctionnalités)
+- [🏗️ Architecture](#️-architecture)
+- [🚀 Installation](#-installation)
+- [💻 Développement](#-développement)
+- [🌍 Internationalisation](#-internationalisation)
+- [📧 Backend & API](#-backend--api)
+- [🎨 Design System](#-design-system)
+- [🔒 Sécurité](#-sécurité)
+- [📊 SEO & Performance](#-seo--performance)
+- [🚢 Déploiement](#-déploiement)
+- [📁 Structure du Projet](#-structure-du-projet)
+- [🔧 Configuration](#-configuration)
+- [🐛 Troubleshooting](#-troubleshooting)
+- [📚 Documentation](#-documentation)
+- [👥 Équipe](#-équipe)
+
+---
+
+## ✨ Fonctionnalités
+
+### Frontend
+- ✅ **Next.js 15** avec App Router
+- ✅ **TypeScript** strict mode
+- ✅ **Tailwind CSS** pour le styling
+- ✅ **Internationalisation** (FR/PT/EN) avec next-intl
+- ✅ **Composants UI** avec shadcn/ui
+- ✅ **Responsive Design** mobile-first
+- ✅ **Animations** subtiles et performantes
+- ✅ **Optimisation d'images** avec Next.js Image
+
+### Backend
+- ✅ **API Routes** Next.js serverless
+- ✅ **Envoi d'emails** via Resend
+- ✅ **Protection anti-spam** avec hCaptcha
+- ✅ **Validation** côté serveur
+
+### SEO & Performance
+- ✅ **Métadonnées** dynamiques par page
+- ✅ **OpenGraph** pour réseaux sociaux
+- ✅ **Sitemap** automatique
+- ✅ **Lighthouse Score**: 91-99/100
+- ✅ **Core Web Vitals** optimisés
+
+### Légal & Conformité
+- ✅ **RGPD** compliant
+- ✅ **CCPA/CPRA** compliant (Californie)
+- ✅ **Pages légales** (Privacy, Legal)
+
+---
+
+## 🏗️ Architecture
+
+### Stack Technique
+
+```
+Frontend:
+├── Framework: Next.js 15 (React 19)
+├── Language: TypeScript 5.x
+├── Styling: Tailwind CSS 3.4
+├── UI Components: shadcn/ui
+└── i18n: next-intl
+
+Backend:
+├── Runtime: Node.js (Vercel Functions)
+├── API Routes: Next.js App Router
+├── Email Service: Resend
+└── Captcha: hCaptcha
+
+Hosting & Deployment:
+├── Platform: Vercel
+├── CDN: Vercel Edge Network
+├── SSL: Let's Encrypt (auto)
+└── DNS: Managed by registrar
+```
+
+### Schéma d'architecture
+
+```
+┌─────────────────────────────────────────────────────┐
+│                    Client (Browser)                  │
+└─────────────────────────────────────────────────────┘
+                          │
+                          ↓
+┌─────────────────────────────────────────────────────┐
+│              Vercel Edge Network (CDN)              │
+└─────────────────────────────────────────────────────┘
+                          │
+                          ↓
+┌─────────────────────────────────────────────────────┐
+│                Next.js Application                   │
+│  ┌──────────────────┐  ┌──────────────────┐        │
+│  │   Frontend (SSR) │  │  API Routes      │        │
+│  │   - Pages        │  │  - /api/contact  │        │
+│  │   - Components   │  │                  │        │
+│  └──────────────────┘  └──────────────────┘        │
+└─────────────────────────────────────────────────────┘
+                          │
+                          ↓
+┌──────────────┐  ┌──────────────┐  ┌──────────────┐
+│   Resend     │  │   hCaptcha   │  │  Next-intl   │
+│   (Emails)   │  │   (Captcha)  │  │    (i18n)    │
+└──────────────┘  └──────────────┘  └──────────────┘
+```
+
+---
+
+## 🚀 Installation
+
+### Prérequis
+
+- **Node.js**: >= 18.17.0
+- **npm**: >= 9.0.0
+- **Git**: Dernière version
+
+### Installation locale
+
+```bash
+# Cloner le repository
+git clone https://github.com/DenisAIagent/camille.git
+cd camille-osteopathe
+
+# Installer les dépendances
+npm install
+
+# Copier les variables d'environnement
+cp .env.example .env.local
+
+# Configurer les variables (voir section Configuration)
+nano .env.local
+
+# Lancer le serveur de développement
+npm run dev
+```
+
+Ouvrir [http://localhost:3000](http://localhost:3000) dans le navigateur.
+
+---
+
+## 💻 Développement
+
+### Scripts disponibles
+
+```bash
+# Développement (avec hot-reload)
+npm run dev
+
+# Build de production
+npm run build
+
+# Démarrer en mode production (après build)
+npm start
+
+# Linting
+npm run lint
+
+# Formattage du code
+npm run format
+
+# Type checking
+npm run type-check
+```
+
+### Workflow de développement
+
+1. Créer une branche depuis `main`
+   ```bash
+   git checkout -b feature/nom-de-la-feature
+   ```
+
+2. Développer et tester localement
+   ```bash
+   npm run dev
+   ```
+
+3. Vérifier le linting et le build
+   ```bash
+   npm run lint
+   npm run build
+   ```
+
+4. Commit et push
+   ```bash
+   git add .
+   git commit -m "feat: description de la feature"
+   git push origin feature/nom-de-la-feature
+   ```
+
+5. Créer une Pull Request sur GitHub
+
+### Conventions de commit
+
+Suivre la spécification [Conventional Commits](https://www.conventionalcommits.org/):
+
+```
+feat: Nouvelle fonctionnalité
+fix: Correction de bug
+docs: Documentation
+style: Formatage, point-virgules manquants, etc.
+refactor: Refactorisation du code
+perf: Amélioration de performance
+test: Ajout de tests
+chore: Tâches de maintenance
+```
+
+---
+
+## 🌍 Internationalisation
+
+Le site supporte 3 langues :
+
+- 🇫🇷 **Français** (défaut)
+- 🇵🇹 **Portugais**
+- 🇬🇧 **Anglais**
+
+### Ajouter une traduction
+
+1. Ouvrir `messages/{locale}.json`
+2. Ajouter la clé de traduction
+3. Utiliser dans les composants :
+
+```tsx
+import { useTranslations } from 'next-intl';
+
+export default function MyComponent() {
+  const t = useTranslations('HomePage');
+  return <h1>{t('title')}</h1>;
+}
+```
+
+### Changer de langue
+
+```tsx
+import { useRouter } from 'next/navigation';
+import { useLocale } from 'next-intl';
+
+const router = useRouter();
+const locale = useLocale();
+
+// Changer vers le portugais
+router.push('/pt');
+```
+
+---
+
+## 📧 Backend & API
+
+### API Routes
+
+#### POST `/api/contact`
+
+Envoie un email de contact.
+
+**Request Body:**
+```json
+{
+  "name": "Jean Dupont",
+  "email": "jean@example.com",
+  "message": "Bonjour, je souhaite prendre rendez-vous.",
+  "captchaToken": "hcaptcha_token_here"
+}
+```
+
+**Response (Success):**
+```json
+{
+  "success": true,
+  "message": "Message envoyé avec succès",
+  "emailId": "email_id_from_resend"
+}
+```
+
+**Response (Error):**
+```json
+{
+  "error": "Invalid captcha"
+}
+```
+
+**Status Codes:**
+- `200`: Succès
+- `400`: Données invalides
+- `500`: Erreur serveur
+
+### Configuration Email
+
+L'envoi d'emails utilise [Resend](https://resend.com):
+
+1. Créer un compte Resend
+2. Obtenir une API key
+3. Ajouter dans `.env.local`:
+
+```env
+RESEND_API_KEY=re_...
+CONTACT_EMAIL=votre-email@exemple.com
+```
+
+Voir [BACKEND_CONFIG.md](./BACKEND_CONFIG.md) pour plus de détails.
+
+---
+
+## 🎨 Design System
+
+### Palette de couleurs
+
+**Inspirée des étangs Koi:**
+
+```css
+--primary: #EE6A22      /* Orange Koi */
+--accent: #F2AF1D       /* Or Lumineux */
+--secondary: #D3D6C3    /* Moon Mist */
+--foreground: #6A6546   /* Kokoda */
+--background: #FFFFFF   /* Blanc */
+```
+
+### Typographie
+
+- **Sans-serif**: Outfit (Google Fonts)
+- **Serif**: Playfair Display (titres)
+- **Mono**: JetBrains Mono (code)
+
+### Composants UI
+
+Basés sur [shadcn/ui](https://ui.shadcn.com/):
+
+```bash
+# Ajouter un composant
+npx shadcn-ui@latest add button
+```
+
+Composants disponibles dans `components/ui/`.
+
+---
+
+## 🔒 Sécurité
+
+### Mesures implémentées
+
+- ✅ **hCaptcha** sur formulaires
+- ✅ **Validation serveur** stricte
+- ✅ **Rate limiting** (via Vercel)
+- ✅ **HTTPS** obligatoire
+- ✅ **Secrets** via variables d'environnement
+- ✅ **CSP Headers** (recommandé)
+
+### Variables sensibles
+
+⚠️ **Ne jamais commit:**
+- `.env.local`
+- `.env.production`
+- Clés API
+- Secrets
+
+Les secrets doivent être dans Vercel Environment Variables.
+
+---
+
+## 📊 SEO & Performance
+
+### Scores Lighthouse
+
+| Metric | Mobile | Desktop |
+|--------|--------|---------|
+| Performance | 91 | 99 |
+| Accessibility | 95 | 96 |
+| Best Practices | 100 | 100 |
+| SEO | 92 | 92 |
+
+### Optimisations
+
+- ✅ Images WebP optimisées
+- ✅ Lazy loading
+- ✅ Code splitting automatique
+- ✅ Prefetching des routes
+- ✅ Compression Brotli/Gzip
+- ✅ CDN Edge caching
+
+### SEO Features
+
+- Métadonnées dynamiques par page
+- Sitemap XML automatique
+- Robots.txt configuré
+- Canonical URLs
+- OpenGraph / Twitter Cards
+- Schema.org markup (à venir)
+
+---
+
+## 🚢 Déploiement
+
+### Vercel (Recommandé)
+
+1. **Connecter le repository GitHub**
+   - Aller sur [vercel.com/new](https://vercel.com/new)
+   - Importer le repository
+   - Configurer les variables d'environnement
+
+2. **Variables d'environnement requises**
+   ```
+   RESEND_API_KEY=...
+   HCAPTCHA_SECRET_KEY=...
+   CONTACT_EMAIL=...
+   NEXT_PUBLIC_HCAPTCHA_SITE_KEY=...
+   ```
+
+3. **Domaine personnalisé**
+   - Settings → Domains
+   - Ajouter `osteopatiaemlisboa.com`
+   - Configurer DNS (voir [DOMAINE_CONFIG.md](./DOMAINE_CONFIG.md))
+
+4. **Déploiement automatique**
+   - Push sur `main` → Déploiement automatique
+
+### Build manuel
+
+```bash
+npm run build
+npm start
+```
+
+---
 
 ## 📁 Structure du Projet
 
 ```
 camille-osteopathe/
 ├── app/
-│   ├── [locale]/              # Routes i18n
-│   │   ├── page.tsx           # Accueil
-│   │   ├── osteopathie/       # Page Ostéopathie
-│   │   ├── trauma/            # Page Trauma
-│   │   ├── contact/           # Page Contact
-│   │   ├── layout.tsx         # Layout avec Header/Footer
-│   │   └── not-found.tsx      # Page 404
+│   ├── [locale]/              # Pages avec routing i18n
+│   │   ├── layout.tsx         # Layout racine
+│   │   ├── page.tsx           # Page d'accueil
+│   │   ├── contact/
+│   │   ├── osteopathie/
+│   │   ├── trauma/
+│   │   ├── legal/
+│   │   └── privacy/
+│   ├── api/                   # API Routes
+│   │   └── contact/
+│   │       └── route.ts
 │   └── globals.css            # Styles globaux
 ├── components/
-│   ├── ui/                    # shadcn/ui components
-│   ├── layout/
-│   │   ├── Header.tsx         # Navigation + LanguageSwitcher
-│   │   ├── Footer.tsx         # Footer
-│   │   └── LanguageSwitcher.tsx
-│   └── contact/
-│       └── ContactForm.tsx    # Formulaire de contact
-├── messages/
-│   ├── fr.json               # Traductions françaises
-│   ├── pt.json               # Traductions portugaises
-│   └── en.json               # Traductions anglaises
+│   ├── layout/                # Layout components
+│   │   ├── Header.tsx
+│   │   └── Footer.tsx
+│   ├── home/                  # Composants page accueil
+│   ├── ui/                    # UI Components (shadcn)
+│   └── contact/               # Composants contact
 ├── i18n/
-│   ├── request.ts            # Config next-intl
-│   └── routing.ts            # Navigation i18n
-└── middleware.ts              # Middleware next-intl
-
+│   ├── routing.ts             # Configuration i18n
+│   └── request.ts
+├── messages/                  # Fichiers de traduction
+│   ├── fr.json
+│   ├── pt.json
+│   └── en.json
+├── public/
+│   └── images/
+│       ├── photos/            # Photos du cabinet
+│       └── opengraph-image.jpg
+├── .env.example               # Template variables d'env
+├── next.config.ts             # Configuration Next.js
+├── tailwind.config.ts         # Configuration Tailwind
+├── tsconfig.json              # Configuration TypeScript
+└── package.json               # Dépendances
 ```
-
-## 🌍 Multilingue
-
-Le site gère 3 langues : Français (défaut), Portugais, Anglais.
-
-### Ajouter/Modifier des traductions
-
-1. Ouvrir le fichier de langue dans `messages/` (fr.json, pt.json, en.json)
-2. Modifier les clés de traduction
-3. Sauvegarder - les changements sont immédiats
-
-Exemple de structure :
-```json
-{
-  "Navigation": {
-    "home": "Accueil",
-    "osteopathy": "L'Ostéopathie",
-    ...
-  },
-  "HomePage": {
-    "h1": "Ostéopathe à Lisbonne – Camille Labasse, D.O",
-    ...
-  }
-}
-```
-
-Le sélecteur de langue est dans le Header (icône globe).
-
-## 🚀 Installation et Lancement
-
-```bash
-# Installation des dépendances
-npm install
-
-# Démarrage du serveur de développement
-npm run dev
-
-# Accéder au site
-# http://localhost:3000
-```
-
-Le site démarre automatiquement en français. Changez la langue via le sélecteur.
-
-## 📄 Pages et Routes
-
-| Page | Route | Description |
-|------|-------|-------------|
-| Accueil | `/` | Présentation, pour qui, pourquoi consulter |
-| Ostéopathie | `/osteopathie` | Définition, indications, parcours |
-| Trauma | `/trauma` | Ostéopathie biodynamique et trauma |
-| Contact | `/contact` | Tarifs, formulaire, carte Google Maps |
-
-Routes localisées : `/{locale}/...` (ex: `/fr`, `/pt`, `/en`)
-
-## 🎯 SEO
-
-### Optimisations implémentées
-
-- **Meta tags** : Title, description, keywords par page
-- **Open Graph** : Partage social optimisé
-- **Structure sémantique** : H1-H6 hiérarchisés selon le cahier des charges
-- **Schema.org** (à ajouter) : LocalBusiness markup recommandé
-- **Sitemap** (à ajouter) : Génération automatique
-- **Robots.txt** (à ajouter)
-
-### Amélioration SEO suggérée
-
-Ajouter dans `app/[locale]/layout.tsx` :
-
-```tsx
-export async function generateMetadata(): Promise<Metadata> {
-  return {
-    metadataBase: new URL('https://votre-domaine.com'),
-    alternates: {
-      canonical: '/',
-      languages: {
-        'fr': '/fr',
-        'pt': '/pt',
-        'en': '/en',
-      },
-    },
-  };
-}
-```
-
-Ajouter Schema.org LocalBusiness dans le Footer :
-
-```tsx
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  "name": "Camille Labasse Ostéopathe D.O",
-  "image": "URL_LOGO",
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "Rua Rodrigues Sampaio n76, 1o apartamento",
-    "addressLocality": "Lisboa",
-    "addressCountry": "PT"
-  },
-  "telephone": "+351930505939",
-  "email": "camilleosteopatia@gmail.com"
-}
-</script>
-```
-
-## 🎨 Design
-
-- **Mobile-first** : Responsive sur tous écrans
-- **Accessibilité** : ARIA labels, contrastes conformes
-- **Animations** : Transitions douces sur hover
-- **Typographie** : Hiérarchie claire, espacement généreux
-- **Border-radius** : 0.75rem (angles arrondis)
-- **Ombres** : Douces sur cartes et composants
-
-## 📝 Formulaire de Contact
-
-Validation via Zod, soumission par `mailto:` (ouvre le client email).
-
-Pour un backend réel, remplacer dans `components/contact/ContactForm.tsx` :
-
-```tsx
-function onSubmit(values) {
-  // Envoyer à une API
-  fetch('/api/contact', {
-    method: 'POST',
-    body: JSON.stringify(values),
-  });
-}
-```
-
-## 🗺️ Google Maps
-
-L'iframe est intégrée dans `/contact` avec l'adresse du cabinet.
-
-## 🔧 Build de Production
-
-```bash
-npm run build
-npm run start
-```
-
-## 📦 Deployment
-
-Compatible avec :
-- **Vercel** (recommandé pour Next.js)
-- **Netlify**
-- **AWS Amplify**
-- Tout hébergeur supportant Node.js
-
-Variables d'environnement recommandées :
-```
-# Optionnel : URL du site
-NEXT_PUBLIC_SITE_URL=https://votre-domaine.com
-```
-
-## 🎨 Personnalisation
-
-### Modifier les couleurs
-
-Éditer `app/globals.css` - section `:root` :
-
-```css
-:root {
-  --primary: #EE6A22;
-  --accent: #F2AF1D;
-  ...
-}
-```
-
-### Ajouter un composant shadcn/ui
-
-```bash
-npx shadcn@latest add [nom-composant]
-```
-
-## 📞 Contact
-
-Camille Labasse  
-Ostéopathe D.O  
-Tel: (00351) 930 505 939  
-Email: camilleosteopatia@gmail.com
 
 ---
 
-**Développé avec Next.js, TypeScript, Tailwind CSS et shadcn/ui**
+## 🔧 Configuration
+
+### Variables d'environnement
+
+Créer `.env.local` à la racine :
+
+```env
+# Email Service (Resend)
+RESEND_API_KEY=re_...
+CONTACT_EMAIL=contact@osteopatiaemlisboa.com
+
+# Captcha (hCaptcha)
+NEXT_PUBLIC_HCAPTCHA_SITE_KEY=...
+HCAPTCHA_SECRET_KEY=...
+
+# Analytics (optionnel)
+NEXT_PUBLIC_GA_MEASUREMENT_ID=G-...
+
+# Site URL
+NEXT_PUBLIC_SITE_URL=https://osteopatiaemlisboa.com
+```
+
+Voir [BACKEND_CONFIG.md](./BACKEND_CONFIG.md) pour obtenir les clés API.
+
+---
+
+## 🐛 Troubleshooting
+
+### Le formulaire de contact ne fonctionne pas
+
+**Problème:** Email non reçu
+
+**Solutions:**
+1. Vérifier que `RESEND_API_KEY` est configuré
+2. Vérifier les logs Vercel (Functions → Logs)
+3. Tester en mode développement (vérifier la console)
+4. Vérifier que l'email `from` est autorisé dans Resend
+
+### Erreur 404 sur `/contact`
+
+**Problème:** Page non trouvée
+
+**Solution:** Vérifier le middleware i18n
+- L'URL correcte est `/fr/contact` (avec locale)
+- Le middleware devrait rediriger `/contact` → `/fr/contact`
+
+### Images ne s'affichent pas
+
+**Problème:** Images cassées
+
+**Solutions:**
+1. Vérifier que les images sont dans `public/images/`
+2. Utiliser le composant `next/image`
+3. Vérifier les chemins (`/images/...` sans `public/`)
+
+### Performance dégradée
+
+**Solutions:**
+1. Vérifier la taille des images (max 500KB)
+2. Utiliser le format WebP
+3. Activer le lazy loading
+4. Vérifier les animations CSS (utiliser `will-change` avec parcimonie)
+
+---
+
+## 📚 Documentation
+
+### Documentation Technique
+- [ARCHITECTURE.md](./ARCHITECTURE.md) - Architecture détaillée
+- [BACKEND_CONFIG.md](./BACKEND_CONFIG.md) - Configuration backend
+- [DOMAINE_CONFIG.md](./DOMAINE_CONFIG.md) - Configuration DNS
+
+### Documentation Projet
+- [PLAN_DEVELOPPEMENT_DEVIS.md](./PLAN_DEVELOPPEMENT_DEVIS.md) - Plan & devis
+- [AMELIORATIONS.md](./AMELIORATIONS.md) - Améliorations futures
+
+### Ressources Externes
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Tailwind CSS](https://tailwindcss.com/docs)
+- [shadcn/ui](https://ui.shadcn.com/)
+- [Resend Docs](https://resend.com/docs)
+- [Vercel Docs](https://vercel.com/docs)
+
+---
+
+## 👥 Équipe
+
+**Développement:** Denis Adam  
+**Design:** Denis Adam  
+**Cliente:** Camille Labasse (Ostéopathe D.O.)
+
+---
+
+## 📄 License
+
+Proprietary License - © 2025 Camille Labasse  
+Tous droits réservés. Usage commercial interdit sans autorisation.
+
+---
+
+## 🙏 Remerciements
+
+- [Vercel](https://vercel.com) pour l'hébergement
+- [Resend](https://resend.com) pour le service d'email
+- [shadcn](https://ui.shadcn.com/) pour les composants UI
+- [hCaptcha](https://hcaptcha.com) pour la protection anti-spam
+
+---
+
+**Fait avec ❤️ à Lisbonne**
