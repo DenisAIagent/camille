@@ -120,7 +120,7 @@ export default function HomePage() {
       />
 
       {/* Hero Section - Parallax avec image de fond */}
-      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden parallax-container">
+      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden parallax-container pb-16">
         {/* Background Image avec parallax */}
         <div
           className="absolute inset-0 z-0"
