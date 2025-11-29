@@ -108,7 +108,7 @@ export default function Footer({ locale }: { locale: string }) {
                         "alternateName": "Camille Osteopatia Lisboa",
                         "url": `https://camille-osteopathe.com/${locale}`,
                         "logo": "https://camille-osteopathe.com/logo.png",
-                        "image": "https://camille-osteopathe.com/images/photos/camille-01.jpeg",
+                        "image": "https://camille-osteopathe.com/images/photos/camille-01%20-%20Grande.jpeg",
                         "description": locale === 'fr'
                             ? "Cabinet d'ostéopathie biodynamique à Lisbonne. Consultations pour adultes, enfants, femmes enceintes et sportifs."
                             : locale === 'pt'
