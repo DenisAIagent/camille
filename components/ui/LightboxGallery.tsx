@@ -108,14 +108,14 @@ export default function LightboxGallery({ images, basePath = '/images/photos/' }
                 <ChevronRight className="w-10 h-10" />
             </button>
 
-            {/* Image Container - Centrage parfait avec CSS Grid */}
+            {/* Image Container - Centrage parfait vertical et horizontal */}
             <div
-                className="absolute inset-0 grid place-items-center p-4 md:p-8"
-                onClick={(e) => e.stopPropagation()}
+                className="absolute inset-0 flex items-center justify-center p-4 md:p-8"
+                style={{ minHeight: '100vh' }}
             >
                 {/* Loading indicator */}
                 {imageLoading && (
-                    <div className="absolute inset-0 grid place-items-center">
+                    <div className="absolute inset-0 flex items-center justify-center">
                         <Loader2 className="w-12 h-12 text-white animate-spin" />
                     </div>
                 )}
@@ -123,27 +123,17 @@ export default function LightboxGallery({ images, basePath = '/images/photos/' }
                 {/* Image wrapper avec animation */}
                 <div
                     key={selectedIndex}
-                    className={`relative transition-all duration-500 ease-out ${direction === 'next' ? 'animate-slide-in-right' :
+                    className={`relative flex items-center justify-center transition-all duration-500 ease-out ${direction === 'next' ? 'animate-slide-in-right' :
                             direction === 'prev' ? 'animate-slide-in-left' :
                                 'animate-scale-in'
                         }`}
-                    style={{
-                        maxWidth: '95vw',
-                        maxHeight: '85vh',
-                        width: 'auto',
-                        height: 'auto',
-                    }}
                 >
                     <Image
                         src={`${basePath}${images[selectedIndex]}`}
                         alt={`Cabinet Camille Labasse - Photo ${selectedIndex + 1}`}
                         width={1600}
                         height={1200}
-                        className="max-w-full max-h-full w-auto h-auto object-contain rounded-lg shadow-2xl"
-                        style={{
-                            maxWidth: '95vw',
-                            maxHeight: '85vh',
-                        }}
+                        className="max-w-[95vw] max-h-[85vh] w-auto h-auto object-contain rounded-lg shadow-2xl"
                         sizes="95vw"
                         quality={100}
                         priority
