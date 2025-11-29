@@ -82,66 +82,63 @@ export default function LightboxGallery({ images, basePath = '/images/photos/' }
             className="fixed inset-0 z-[9999] bg-black/98 backdrop-blur-lg animate-fade-in"
             onClick={onClose}
         >
-            {/* Close Button */}
-            <button
-                onClick={onClose}
-                className="absolute top-6 right-6 z-50 p-4 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all hover:rotate-90 hover:scale-110 shadow-2xl"
-                aria-label="Fermer"
-            >
-                <X className="w-7 h-7" />
-            </button>
-
-            {/* Navigation Buttons - Plus visibles */}
-            <button
-                onClick={onPrev}
-                className="absolute left-6 top-1/2 -translate-y-1/2 z-50 p-4 rounded-full bg-white/10 hover:bg-white/25 text-white transition-all hover:scale-110 shadow-2xl"
-                aria-label="Précédent"
-            >
-                <ChevronLeft className="w-10 h-10" />
-            </button>
-
-            <button
-                onClick={onNext}
-                className="absolute right-6 top-1/2 -translate-y-1/2 z-50 p-4 rounded-full bg-white/10 hover:bg-white/25 text-white transition-all hover:scale-110 shadow-2xl"
-                aria-label="Suivant"
-            >
-                <ChevronRight className="w-10 h-10" />
-            </button>
-
-            {/* Image Container - Structure simplifiée et robuste */}
-            <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4 md:p-12">
-                {/* Loading indicator */}
-                {imageLoading && (
-                    <div className="absolute inset-0 flex items-center justify-center">
-                        <Loader2 className="w-12 h-12 text-white animate-spin" />
-                    </div>
-                )}
-
-                {/* Image wrapper */}
-                <div
-                    key={selectedIndex}
-                    className={`relative max-w-full max-h-full flex items-center justify-center transition-all duration-300 ease-out ${direction === 'next' ? 'animate-slide-in-right' :
-                            direction === 'prev' ? 'animate-slide-in-left' :
-                                'animate-scale-in'
-                        }`}
+            {/* Image Container - Méthode Infaillible : Fill + Object-Contain */}
+            <div className="fixed inset-0 z-[10000] flex items-center justify-center bg-black/95 backdrop-blur-md">
+                {/* Close Button */}
+                <button
+                    onClick={onClose}
+                    className="absolute top-6 right-6 z-50 p-4 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all hover:rotate-90 hover:scale-110 shadow-2xl"
+                    aria-label="Fermer"
                 >
+                    <X className="w-7 h-7" />
+                </button>
+
+                {/* Navigation Buttons */}
+                <button
+                    onClick={onPrev}
+                    className="absolute left-6 top-1/2 -translate-y-1/2 z-50 p-4 rounded-full bg-white/10 hover:bg-white/25 text-white transition-all hover:scale-110 shadow-2xl hidden md:block"
+                    aria-label="Précédent"
+                >
+                    <ChevronLeft className="w-10 h-10" />
+                </button>
+
+                <button
+                    onClick={onNext}
+                    className="absolute right-6 top-1/2 -translate-y-1/2 z-50 p-4 rounded-full bg-white/10 hover:bg-white/25 text-white transition-all hover:scale-110 shadow-2xl hidden md:block"
+                    aria-label="Suivant"
+                >
+                    <ChevronRight className="w-10 h-10" />
+                </button>
+
+                {/* Zone d'affichage de l'image - Prend tout l'écran moins le padding */}
+                <div
+                    className="relative w-full h-full max-w-[95vw] max-h-[90vh] p-4 md:p-8"
+                    onClick={(e) => e.stopPropagation()}
+                >
+                    {/* Loading indicator */}
+                    {imageLoading && (
+                        <div className="absolute inset-0 flex items-center justify-center z-0">
+                            <Loader2 className="w-12 h-12 text-white animate-spin" />
+                        </div>
+                    )}
+
                     <Image
+                        key={selectedIndex}
                         src={`${basePath}${images[selectedIndex]}`}
                         alt={`Cabinet Camille Labasse - Photo ${selectedIndex + 1}`}
-                        width={1920}
-                        height={1080}
-                        className="max-w-[90vw] max-h-[85vh] w-auto h-auto object-contain rounded-lg shadow-2xl"
-                        sizes="90vw"
+                        fill
+                        className={`object-contain transition-opacity duration-300 ${imageLoading ? 'opacity-0' : 'opacity-100'}`}
+                        sizes="95vw"
                         quality={100}
                         priority
                         onLoad={() => setImageLoading(false)}
                     />
                 </div>
-            </div>
 
-            {/* Counter - Plus visible */}
-            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 px-6 py-3 bg-white/10 backdrop-blur-md rounded-full text-white text-base font-medium shadow-2xl border border-white/20">
-                {selectedIndex + 1} / {images.length}
+                {/* Counter */}
+                <div className="absolute bottom-8 left-1/2 -translate-x-1/2 px-6 py-3 bg-white/10 backdrop-blur-md rounded-full text-white text-base font-medium shadow-2xl border border-white/20 z-50">
+                    {selectedIndex + 1} / {images.length}
+                </div>
             </div>
 
             {/* Instructions pour mobile */}
