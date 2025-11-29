@@ -28,32 +28,34 @@ export default function ContactModal({ trigger }: ContactModalProps) {
     }, [isOpen]);
 
     const modalContent = (
-        <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
-            {/* Modal Content */}
-            <div className="relative bg-background border border-border rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto animate-fade-in-up">
-                {/* Close Button */}
-                <button
-                    onClick={() => setIsOpen(false)}
-                    className="absolute top-4 right-4 z-10 p-2 rounded-full bg-muted hover:bg-muted/80 transition-colors"
-                    aria-label="Fermer"
-                >
-                    <X className="w-5 h-5" />
-                </button>
+        <div className="fixed inset-0 z-[9999] overflow-y-auto bg-black/50 backdrop-blur-sm animate-fade-in">
+            <div className="min-h-full flex items-center justify-center p-4">
+                {/* Modal Content */}
+                <div className="relative bg-background border border-border rounded-2xl shadow-2xl max-w-2xl w-full animate-fade-in-up my-8">
+                    {/* Close Button */}
+                    <button
+                        onClick={() => setIsOpen(false)}
+                        className="absolute top-4 right-4 z-10 p-3 rounded-full bg-muted hover:bg-muted/80 transition-colors touch-manipulation"
+                        aria-label="Fermer"
+                    >
+                        <X className="w-5 h-5" />
+                    </button>
 
-                {/* Modal Header */}
-                <div className="p-8 pb-6 border-b border-border">
-                    <h2 className="text-3xl font-serif font-medium text-foreground">
-                        Nous contacter
-                    </h2>
-                    <p className="text-muted-foreground mt-2">
-                        Remplissez le formulaire ci-dessous pour exercer vos droits RGPD
-                        ou toute autre demande.
-                    </p>
-                </div>
+                    {/* Modal Header */}
+                    <div className="p-8 pb-6 border-b border-border">
+                        <h2 className="text-3xl font-serif font-medium text-foreground pr-8">
+                            Nous contacter
+                        </h2>
+                        <p className="text-muted-foreground mt-2">
+                            Remplissez le formulaire ci-dessous pour exercer vos droits RGPD
+                            ou toute autre demande.
+                        </p>
+                    </div>
 
-                {/* Contact Form */}
-                <div className="p-8">
-                    <ContactForm onSuccess={() => setIsOpen(false)} />
+                    {/* Contact Form */}
+                    <div className="p-8">
+                        <ContactForm onSuccess={() => setIsOpen(false)} />
+                    </div>
                 </div>
             </div>
         </div>
