@@ -101,24 +101,34 @@ export default function LightboxGallery({ images, basePath = '/images/photos/' }
 
             {/* Main Image Container - Centrage absolu */}
             <div
-                className="absolute inset-0 flex items-center justify-center p-4 md:p-12 pointer-events-none"
+                className="absolute inset-0 flex items-center justify-center pointer-events-none"
             >
-                <div
-                    key={selectedIndex}
-                    className={`relative w-full h-full max-w-[90vw] max-h-[90vh] pointer-events-auto ${direction === 'next' ? 'animate-slide-in-right' :
-                        direction === 'prev' ? 'animate-slide-in-left' :
-                            'animate-scale-in'
-                        }`}
-                >
-                    <Image
-                        src={`${basePath}${images[selectedIndex]}`}
-                        alt={`Galerie photo ${selectedIndex + 1}`}
-                        fill
-                        className="object-contain"
-                        sizes="90vw"
-                        quality={100}
-                        priority
-                    />
+                <div className="relative w-full h-full flex items-center justify-center p-4 md:p-12">
+                    <div
+                        key={selectedIndex}
+                        className={`relative max-w-[90vw] max-h-[90vh] w-auto h-auto pointer-events-auto ${direction === 'next' ? 'animate-slide-in-right' :
+                            direction === 'prev' ? 'animate-slide-in-left' :
+                                'animate-scale-in'
+                            }`}
+                        style={{
+                            maxWidth: 'calc(100vw - 2rem)',
+                            maxHeight: 'calc(100vh - 8rem)'
+                        }}
+                    >
+                        {/* Container avec aspect ratio préservé */}
+                        <div className="relative w-full h-full flex items-center justify-center">
+                            <Image
+                                src={`${basePath}${images[selectedIndex]}`}
+                                alt={`Galerie photo ${selectedIndex + 1}`}
+                                width={1200}
+                                height={800}
+                                className="max-w-full max-h-full w-auto h-auto object-contain"
+                                sizes="90vw"
+                                quality={100}
+                                priority
+                            />
+                        </div>
+                    </div>
                 </div>
 
                 {/* Counter */}
