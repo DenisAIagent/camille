@@ -139,120 +139,199 @@ export default function WhoIsItFor() {
                 <h2 className="text-4xl md:text-5xl font-serif text-center mb-4 text-gradient">{t('h2_who')}</h2>
                 <p className="text-center text-muted-foreground mb-16 text-lg">Pour toute la famille, à chaque étape de la vie</p>
 
-                {/* Cards Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 max-w-7xl mx-auto">
-                    {categories.map((key, index) => (
-                        <button
-                            key={key}
-                            onClick={() => setSelectedCategory(selectedCategory === key ? null : key)}
-                            className={`group relative animate-fade-in-up cursor-pointer transition-all ${selectedCategory === key ? 'scale-105' : ''
-                                }`}
-                            style={{ animationDelay: `${index * 100}ms` }}
-                            aria-expanded={selectedCategory === key}
-                            aria-controls={`content-${key}`}
-                        >
-                            {/* Glow effect on hover */}
-                            <div className={`absolute -inset-1 bg-gradient-to-br from-primary/20 via-accent/20 to-primary/20 rounded-2xl blur-xl transition-all duration-700 ${selectedCategory === key ? 'opacity-100 blur-2xl' : 'opacity-0 group-hover:opacity-100 group-hover:blur-2xl'
-                                }`}></div>
+                {/* Mobile View: Accordion */}
+                <div className="md:hidden space-y-4">
+                    {categories.map((key) => {
+                        const content = getCategoryContent(key);
+                        const isSelected = selectedCategory === key;
 
-                            {/* Card */}
-                            <div className={`relative bg-card/60 backdrop-blur-xl border-2 rounded-2xl p-8 shadow-lg transition-all duration-500 hover:-translate-y-2 min-h-[160px] flex items-center justify-center ${selectedCategory === key
-                                ? 'border-primary shadow-2xl bg-card/80'
-                                : 'border-border/50 group-hover:border-primary/50 group-hover:shadow-2xl'
-                                }`}>
-                                {/* Subtle gradient overlay */}
-                                <div className={`absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 rounded-2xl transition-opacity duration-500 ${selectedCategory === key ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
-                                    }`}></div>
+                        return (
+                            <div key={key} className="bg-card/60 backdrop-blur-xl border-2 border-border/50 rounded-2xl overflow-hidden shadow-sm transition-all duration-300">
+                                <button
+                                    onClick={() => setSelectedCategory(isSelected ? null : key)}
+                                    className={`w-full p-6 flex items-center justify-between text-left transition-colors ${isSelected ? 'bg-primary/5 text-primary' : 'text-foreground'}`}
+                                    aria-expanded={isSelected}
+                                >
+                                    <span className="font-semibold text-lg">{t(key)}</span>
+                                    <span className={`transform transition-transform duration-300 ${isSelected ? 'rotate-180' : ''}`}>
+                                        ▼
+                                    </span>
+                                </button>
 
-                                {/* Floating decorative elements */}
-                                <div className={`absolute top-3 right-3 w-2 h-2 rounded-full transition-all duration-700 ${selectedCategory === key
-                                    ? 'bg-primary scale-150'
-                                    : 'bg-primary/30 group-hover:scale-150 group-hover:bg-primary/60'
-                                    }`}></div>
                                 <div
-                                    className={`absolute bottom-3 left-3 w-3 h-3 rounded-full transition-all duration-700 ${selectedCategory === key
-                                        ? 'bg-accent scale-150'
-                                        : 'bg-accent/30 group-hover:scale-150 group-hover:bg-accent/60'
-                                        }`}
-                                    style={{ transitionDelay: '100ms' }}
-                                ></div>
+                                    className={`grid transition-all duration-300 ease-in-out ${isSelected ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}
+                                >
+                                    <div className="overflow-hidden">
+                                        <div className="p-6 pt-0 border-t border-border/50">
+                                            <p className="text-foreground/90 mb-6 leading-relaxed mt-4">
+                                                {content.description}
+                                            </p>
 
-                                {/* Text */}
-                                <span className={`relative font-semibold text-center leading-tight transition-colors duration-300 ${selectedCategory === key ? 'text-primary' : 'text-foreground group-hover:text-primary'
-                                    }`}>
-                                    {t(key)}
-                                </span>
+                                            <div className="space-y-6">
+                                                <div>
+                                                    <h4 className="font-semibold mb-3 text-primary flex items-center gap-2 text-sm uppercase tracking-wider">
+                                                        <span className="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                                                        Bénéfices
+                                                    </h4>
+                                                    <ul className="space-y-2">
+                                                        {content.benefits.map((benefit, idx) => (
+                                                            <li key={idx} className="flex items-start gap-2 text-sm text-foreground/80">
+                                                                <span className="text-accent mt-1">✓</span>
+                                                                <span>{benefit}</span>
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                </div>
 
-                                {/* Shimmer effect */}
-                                <div className={`absolute inset-0 rounded-2xl shimmer pointer-events-none ${selectedCategory === key ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
-                                    }`}></div>
+                                                <div>
+                                                    <h4 className="font-semibold mb-3 text-primary flex items-center gap-2 text-sm uppercase tracking-wider">
+                                                        <span className="w-1.5 h-1.5 bg-accent rounded-full"></span>
+                                                        Conditions
+                                                    </h4>
+                                                    <ul className="space-y-2">
+                                                        {content.conditions.map((condition, idx) => (
+                                                            <li key={idx} className="flex items-start gap-2 text-sm text-foreground/80">
+                                                                <span className="text-primary mt-1">•</span>
+                                                                <span>{condition}</span>
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                            <div className="mt-6 pt-6 border-t border-border text-center">
+                                                <Link
+                                                    href="/contact"
+                                                    className="inline-flex items-center justify-center px-8 py-3 rounded-full gradient-warm text-white font-medium text-sm shadow-lg w-full"
+                                                >
+                                                    Prendre rendez-vous
+                                                </Link>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </button>
-                    ))}
+                        );
+                    })}
                 </div>
 
-                {/* SEO Content Section */}
-                {selectedContent && (
-                    <div
-                        id={`content-${selectedContent.key}`}
-                        className="mt-16 max-w-4xl mx-auto animate-fade-in-up"
-                    >
-                        <div className="bg-card/95 backdrop-blur-xl rounded-3xl p-8 md:p-12 shadow-premium border-2 border-primary/30">
-                            <h3 className="text-3xl font-serif mb-6 text-gradient">{selectedContent.title}</h3>
+                {/* Desktop View: Tabs */}
+                <div className="hidden md:block">
+                    {/* Cards Grid */}
+                    <div className="grid grid-cols-3 lg:grid-cols-5 gap-6 max-w-7xl mx-auto">
+                        {categories.map((key, index) => (
+                            <button
+                                key={key}
+                                onClick={() => setSelectedCategory(selectedCategory === key ? null : key)}
+                                className={`group relative animate-fade-in-up cursor-pointer transition-all ${selectedCategory === key ? 'scale-105' : ''
+                                    }`}
+                                style={{ animationDelay: `${index * 100}ms` }}
+                                aria-expanded={selectedCategory === key}
+                                aria-controls={`content-${key}`}
+                            >
+                                {/* Glow effect on hover */}
+                                <div className={`absolute -inset-1 bg-gradient-to-br from-primary/20 via-accent/20 to-primary/20 rounded-2xl blur-xl transition-all duration-700 ${selectedCategory === key ? 'opacity-100 blur-2xl' : 'opacity-0 group-hover:opacity-100 group-hover:blur-2xl'
+                                    }`}></div>
 
-                            <p className="text-lg text-foreground/90 mb-8 leading-relaxed">
-                                {selectedContent.description}
-                            </p>
+                                {/* Card */}
+                                <div className={`relative bg-card/60 backdrop-blur-xl border-2 rounded-2xl p-8 shadow-lg transition-all duration-500 hover:-translate-y-2 min-h-[160px] flex items-center justify-center ${selectedCategory === key
+                                    ? 'border-primary shadow-2xl bg-card/80'
+                                    : 'border-border/50 group-hover:border-primary/50 group-hover:shadow-2xl'
+                                    }`}>
+                                    {/* Subtle gradient overlay */}
+                                    <div className={`absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 rounded-2xl transition-opacity duration-500 ${selectedCategory === key ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+                                        }`}></div>
 
-                            <div className="grid md:grid-cols-2 gap-8">
-                                {/* Bénéfices */}
-                                <div>
-                                    <h4 className="text-xl font-semibold mb-4 text-primary flex items-center gap-2">
-                                        <span className="w-2 h-2 bg-primary rounded-full"></span>
-                                        Bénéfices de l&apos;ostéopathie
-                                    </h4>
-                                    <ul className="space-y-3">
-                                        {selectedContent.benefits.map((benefit, idx) => (
-                                            <li key={idx} className="flex items-start gap-3 text-foreground/80">
-                                                <span className="text-accent mt-1.5 font-semibold">✓</span>
-                                                <span>{benefit}</span>
-                                            </li>
-                                        ))}
-                                    </ul>
+                                    {/* Floating decorative elements */}
+                                    <div className={`absolute top-3 right-3 w-2 h-2 rounded-full transition-all duration-700 ${selectedCategory === key
+                                        ? 'bg-primary scale-150'
+                                        : 'bg-primary/30 group-hover:scale-150 group-hover:bg-primary/60'
+                                        }`}></div>
+                                    <div
+                                        className={`absolute bottom-3 left-3 w-3 h-3 rounded-full transition-all duration-700 ${selectedCategory === key
+                                            ? 'bg-accent scale-150'
+                                            : 'bg-accent/30 group-hover:scale-150 group-hover:bg-accent/60'
+                                            }`}
+                                        style={{ transitionDelay: '100ms' }}
+                                    ></div>
+
+                                    {/* Text */}
+                                    <span className={`relative font-semibold text-center leading-tight transition-colors duration-300 ${selectedCategory === key ? 'text-primary' : 'text-foreground group-hover:text-primary'
+                                        }`}>
+                                        {t(key)}
+                                    </span>
+
+                                    {/* Shimmer effect */}
+                                    <div className={`absolute inset-0 rounded-2xl shimmer pointer-events-none ${selectedCategory === key ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+                                        }`}></div>
                                 </div>
+                            </button>
+                        ))}
+                    </div>
 
-                                {/* Conditions traitées */}
-                                <div>
-                                    <h4 className="text-xl font-semibold mb-4 text-primary flex items-center gap-2">
-                                        <span className="w-2 h-2 bg-accent rounded-full"></span>
-                                        Conditions traitées
-                                    </h4>
-                                    <ul className="space-y-3">
-                                        {selectedContent.conditions.map((condition, idx) => (
-                                            <li key={idx} className="flex items-start gap-3 text-foreground/80">
-                                                <span className="text-primary mt-1.5 font-semibold">•</span>
-                                                <span>{condition}</span>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            </div>
+                    {/* SEO Content Section (Desktop) */}
+                    {selectedContent && (
+                        <div
+                            id={`content-${selectedContent.key}`}
+                            className="mt-16 max-w-4xl mx-auto animate-fade-in-up"
+                        >
+                            <div className="bg-card/95 backdrop-blur-xl rounded-3xl p-12 shadow-premium border-2 border-primary/30">
+                                <h3 className="text-3xl font-serif mb-6 text-gradient">{selectedContent.title}</h3>
 
-                            {/* CTA */}
-                            <div className="mt-8 pt-8 border-t border-border text-center">
-                                <p className="text-foreground font-medium mb-6 text-lg">
-                                    Prenez soin de votre santé dès aujourd&apos;hui
+                                <p className="text-lg text-foreground/90 mb-8 leading-relaxed">
+                                    {selectedContent.description}
                                 </p>
-                                <Link
-                                    href="/contact"
-                                    className="inline-flex items-center justify-center px-10 py-4 rounded-full gradient-warm text-white font-bold text-lg shadow-lg hover:shadow-glow transition-smooth hover-scale tracking-wide"
-                                >
-                                    Prendre rendez-vous
-                                </Link>
+
+                                <div className="grid grid-cols-2 gap-8">
+                                    {/* Bénéfices */}
+                                    <div>
+                                        <h4 className="text-xl font-semibold mb-4 text-primary flex items-center gap-2">
+                                            <span className="w-2 h-2 bg-primary rounded-full"></span>
+                                            Bénéfices de l&apos;ostéopathie
+                                        </h4>
+                                        <ul className="space-y-3">
+                                            {selectedContent.benefits.map((benefit, idx) => (
+                                                <li key={idx} className="flex items-start gap-3 text-foreground/80">
+                                                    <span className="text-accent mt-1.5 font-semibold">✓</span>
+                                                    <span>{benefit}</span>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+
+                                    {/* Conditions traitées */}
+                                    <div>
+                                        <h4 className="text-xl font-semibold mb-4 text-primary flex items-center gap-2">
+                                            <span className="w-2 h-2 bg-accent rounded-full"></span>
+                                            Conditions traitées
+                                        </h4>
+                                        <ul className="space-y-3">
+                                            {selectedContent.conditions.map((condition, idx) => (
+                                                <li key={idx} className="flex items-start gap-3 text-foreground/80">
+                                                    <span className="text-primary mt-1.5 font-semibold">•</span>
+                                                    <span>{condition}</span>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                {/* CTA */}
+                                <div className="mt-8 pt-8 border-t border-border text-center">
+                                    <p className="text-foreground font-medium mb-6 text-lg">
+                                        Prenez soin de votre santé dès aujourd&apos;hui
+                                    </p>
+                                    <Link
+                                        href="/contact"
+                                        className="inline-flex items-center justify-center px-10 py-4 rounded-full gradient-warm text-white font-bold text-lg shadow-lg hover:shadow-glow transition-smooth hover-scale tracking-wide"
+                                    >
+                                        Prendre rendez-vous
+                                    </Link>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                )}
+                    )}
+                </div>
             </div>
         </section>
     );
