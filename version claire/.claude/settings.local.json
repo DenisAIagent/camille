@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run dev:*)",
+      "Bash(npm install)",
+      "Bash(lsof:*)",
+      "Bash(kill:*)",
+      "Bash(tree:*)",
+      "Bash(npm install:*)",
+      "Bash(mkdir:*)",
+      "Bash(cat:*)",
+      "Bash(git add:*)",
+      "Bash(git reset:*)"
+    ]
+  },
+  "disabledMcpjsonServers": [
+    "n8n-mcp"
+  ]
+}

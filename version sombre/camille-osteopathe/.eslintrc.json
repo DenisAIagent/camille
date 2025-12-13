@@ -1,0 +1,37 @@
+{
+    "extends": [
+        "next/core-web-vitals",
+        "plugin:security/recommended"
+    ],
+    "plugins": [
+        "security"
+    ],
+    "ignorePatterns": [
+        "scripts/**",
+        "*.js",
+        "!next.config.js"
+    ],
+    "rules": {
+        "react-hooks/exhaustive-deps": "warn"
+    },
+    "overrides": [
+        {
+            "files": [
+                "scripts/**/*.js",
+                "scripts/*.js"
+            ],
+            "rules": {
+                "@typescript-eslint/no-require-imports": "off"
+            }
+        },
+        {
+            "files": [
+                "components/ui/ContactModal.tsx",
+                "components/ui/LightboxGallery.tsx"
+            ],
+            "rules": {
+                "react-hooks/exhaustive-deps": "off"
+            }
+        }
+    ]
+}

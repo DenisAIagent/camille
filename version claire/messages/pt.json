@@ -1,0 +1,112 @@
+{
+    "Navigation": {
+        "home": "Início",
+        "osteopathy": "A Osteopatia",
+        "trauma": "Trauma",
+        "contact": "Contactos",
+        "bookAppointment": "Marcar consulta",
+        "skip_to_content": "Ir para o conteúdo principal"
+    },
+    "HomePage": {
+        "h1": "Osteopata em Lisboa – Camille Labasse, D.O",
+        "intro": "A osteopatia tem uma maneira única mas universal, científica e filosófica, profundamente humanista e naturalista de conceber o ser humano.",
+        "welcome": "Sejam bem vindos ao gabinete de osteopatia da Dra Camille Labasse !",
+        "h2_osteopathy": "A osteopatia: uma abordagem humana e natural",
+        "h2_welcome": "Bem-vindo ao gabinete de osteopatia",
+        "h2_who": "Para quem é a osteopatia?",
+        "who_babies": "Bebés e crianças",
+        "who_adults": "Adultos e idosos",
+        "who_sports": "Desportistas",
+        "who_pregnant": "Grávidas",
+        "who_chronic": "Pessoas com patologias crónicas",
+        "h2_why": "Porquê consultar?",
+        "why_muscle": "Dores musculo-articulares",
+        "why_digestive": "Distúrbios digestivos",
+        "why_stress": "Stress, fadiga, insónias",
+        "why_tinnitus": "Zumbidos, vertigens, dores de cabeça",
+        "why_women": "Distúrbios menstruais ou genito-urinais",
+        "h2_book": "Marcar consulta"
+    },
+    "OsteopathyPage": {
+        "h1": "A osteopatia: definição, indicações e prática",
+        "h2_understand": "Compreender a osteopatia",
+        "text_understand": "A osteopatia diagnostica e trata as disfunções de mobilidade dos tecidos do corpo que alterem o estado de saúde, numa compreensão geral do ser humano. É adaptada para todos : desde do bebé até a terceira idade, desportistas, gravidas, pessoas com deficiências ou patologias crónicas... O tratamento de osteopatia, além de ajudar no sintoma e a sua causa, regula o sistema nervoso e recarrega profundamente o corpo.",
+        "h2_functional": "Os distúrbios funcionais tratados",
+        "text_functional": "Trata os distúrbios funcionais do corpo humano :\nDores musculo-articulares, dores de cabeça, vertigens, zumbidos, distúrbios da concentração, sequelas de traumatismos, distúrbios digestivos, genito-urinais, menstruais, infeções recorrentes, fadiga, stress, insónias...\n\nCada consulta visa restaurar o equilíbrio natural do corpo para um alívio duradouro.",
+        "h2_pathologies": "As patologias acompanhadas",
+        "text_pathologies": "Acompanha a sintomatologia das patologias como : fibromialgia, artrose, doença de Crohn, intestino irritável, asma, depressão, doenças autoimunes ou oncológicas...\n\nA abordagem osteopática oferece um acompanhamento complementar para melhorar o conforto de vida e aliviar os sintomas.",
+        "h2_bio": "O percurso de Camille Labasse, Osteopata D.O",
+        "text_bio": "Camille é osteopata exclusiva e certificada. Isso significa que estudou 5 anos numa escola certificada pelo Ministério da Saude francês, de acordo com os padrões europeus de formação em osteopatia. É especializada em técnicas ditas funcionais, indiretas e suaves. \nContinua a formar-se em formação contínua com os melhores professores da França: Pierre Tricot, Elisabeth Tissot, Pascal Anselin...",
+        "cta_question": "Precisa de uma consulta?",
+        "cta_button": "Marcar consulta"
+    },
+    "TraumaPage": {
+        "h1": "Osteopatia biodinâmica e trauma: a abordagem somática",
+        "h2_why_body": "Por que o corpo armazena o trauma?",
+        "text_intro": "Não resolvido e osteopatia biodinâmica: uma abordagem somática osteopática do trauma\n\nAqui, o toque osteopático ao nível do crânio em relação às áreas cerebrais é utilizado para facilitar o contacto íntimo com o inconsciente através do corpo. É o corpo que armazena, expressa e liberta o trauma.",
+        "h2_how": "Como se desenrola o trabalho somático?",
+        "text_work": "Neste trabalho, o encontro com o que o nosso corpo guarda vai permitir-nos expressar a emoção que foi reprimida em momentos chave do nosso passado, reprocessar memórias, purgar o traumatismo e permitir ao nosso sistema nervoso regular-se de forma duradoura.",
+        "h2_who_for": "Para quem é esta abordagem?",
+        "text_who": "Este trabalho é adaptado a qualquer pessoa que deseje aprofundar o seu desenvolvimento pessoal e encontrar a origem de certos distúrbios (ansiedade, bloqueios relacionais, stress crónico, sintomas físicos que não encontram solução nos cuidados clássicos).",
+        "h2_role": "O papel do corpo na transformação",
+        "text_role": "O corpo é a chave da verdadeira transformação.",
+        "cta_question": "Pronto para iniciar o seu caminho de cura?",
+        "cta_button": "Marcar consulta"
+    },
+    "ContactPage": {
+        "h1": "Preços e contactos do gabinete de osteopatia",
+        "h2_rates": "Preços das consultas",
+        "rate_consult": "A consulta: 60€",
+        "rate_reduced": "Bebê com menos de 1 ano, desemprego: 50€",
+        "h2_trauma_rates": "Preço para o trabalho do trauma",
+        "trauma_social": "Valor social 30-40€",
+        "trauma_medium": "Valor médio 70-80",
+        "trauma_abundant": "Valor abundante 80+",
+        "h2_info": "Informações práticas",
+        "h3_address": "Morada do gabinete",
+        "address_line1": "Espaço Oneleaf",
+        "address_line2": "Rua Rodrigues Sampaio n76, 1o apartamento",
+        "address_note": "O edifício tem elevador e acesso facilitado para pacientes com mobilidade reduzida",
+        "h3_contact": "Contactos",
+        "contact_phrase": "Tem uma pergunta ou quer marcar?",
+        "h2_cancellation": "Política de cancelamento",
+        "cancellation_policy": "Uma consulta marcada há de ser cancelada com alguma antecedência ou poderá ser cobrada",
+        "form_name": "Nome",
+        "form_email": "Email",
+        "form_message": "Mensagem",
+        "form_submit": "Enviar"
+    },
+    "Contact": {
+        "email": "camille@osteopathe-lisbonne.com",
+        "whatsapp": "351912345678",
+        "whatsappMessage": "Olá, gostaria de marcar uma consulta de osteopatia."
+    },
+    "ContactModals": {
+        "whatsapp": {
+            "title": "WhatsApp",
+            "subtitle": "Entre em contato",
+            "phoneLabel": "Número WhatsApp",
+            "copied": "Número copiado!",
+            "openIn": "Abrir em:",
+            "openApp": "Aplicativo WhatsApp",
+            "openWeb": "WhatsApp Web",
+            "info": "Uma mensagem pré-preenchida estará pronta para enviar",
+            "close": "Fechar"
+        },
+        "email": {
+            "title": "Email",
+            "subtitle": "Envie-nos uma mensagem",
+            "nameLabel": "Nome",
+            "namePlaceholder": "O seu nome",
+            "emailLabel": "Email",
+            "emailPlaceholder": "seu@email.com",
+            "messageLabel": "Mensagem",
+            "messagePlaceholder": "A sua mensagem...",
+            "send": "Enviar mensagem",
+            "sending": "Enviando...",
+            "success": "Mensagem enviada com sucesso!",
+            "error": "Erro ao enviar. Por favor, tente novamente.",
+            "close": "Fechar"
+        }
+    }
+}

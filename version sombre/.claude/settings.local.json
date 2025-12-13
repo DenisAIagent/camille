@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node --version:*)",
+      "Bash(npm:*)",
+      "Bash([ -d \"node_modules\" ])",
+      "Bash([ -f \".next/BUILD_ID\" ])",
+      "Bash(pkill:*)",
+      "Bash(curl:*)",
+      "Bash([ -f \"package.json\" ])",
+      "Bash([ -d \".next\" ])"
+    ]
+  },
+  "disabledMcpjsonServers": [
+    "n8n-mcp"
+  ]
+}
