@@ -78,7 +78,7 @@
   },
   "Contact": {
     "email": "camille@osteopathe-lisbonne.com",
-    "whatsapp": "351912345678",
+    "whatsapp": "351930505939",
     "whatsappMessage": "Bonjour, je souhaiterais prendre rendez-vous pour une consultation d'ostéopathie."
   },
   "ContactModals": {
@@ -108,5 +108,28 @@
       "error": "Erreur lors de l'envoi. Veuillez réessayer.",
       "close": "Fermer"
     }
+  },
+  "FAQPage": {
+    "h1": "Questions Fréquentes",
+    "subtitle": "Tout ce que vous devez savoir sur l'ostéopathie à Lisbonne",
+    "q1": "Qu'est-ce que l'ostéopathie ?",
+    "a1": "L'ostéopathie est une approche thérapeutique manuelle qui vise à restaurer l'équilibre naturel du corps. Elle traite les dysfonctions de mobilité des tissus qui peuvent altérer la santé. <a href='/osteopathie' class='text-primary hover:underline font-medium'>En savoir plus sur l'ostéopathie</a>.",
+    "q2": "Combien de séances sont nécessaires ?",
+    "a2": "Le nombre de séances varie selon chaque personne et la nature du problème. En général, 1 à 3 séances suffisent pour les troubles aigus, tandis que les problèmes chroniques peuvent nécessiter un suivi plus long. Chaque cas est évalué individuellement lors de la première consultation.",
+    "q3": "Combien coûte une séance d'ostéopathie ?",
+    "a3": "La consultation coûte 60€. Tarif réduit de 50€ pour les bébés de moins d'1 an et les personnes au chômage. <a href='/contact' class='text-primary hover:underline font-medium'>Voir tous les tarifs et prendre rendez-vous</a>.",
+    "q4": "L'ostéopathie est-elle remboursée ?",
+    "a4": "Je ne suis pas affiliée à une assurance (« seguro de saúde »). Cependant, je fournis une facture détaillée que vous pouvez soumettre vous-même à votre assurance pour demander un remboursement partiel, selon votre contrat.",
+    "q5": "Pour quels types de maux peut-on consulter ?",
+    "a5": "L'ostéopathie traite de nombreux troubles : douleurs musculo-articulaires, migraines, troubles digestifs, stress, insomnies, vertiges, acouphènes, troubles menstruels, et bien plus. <a href='/osteopathie' class='text-primary hover:underline font-medium'>Découvrir tous les troubles traités</a>.",
+    "q6": "L'ostéopathie est-elle adaptée aux bébés et femmes enceintes ?",
+    "a6": "Oui, absolument ! L'ostéopathie utilise des techniques très douces et sûres, parfaitement adaptées aux bébés (coliques, troubles du sommeil, plagiocéphalie) et aux femmes enceintes (douleurs lombaires, préparation à l'accouchement). <a href='/osteopathie' class='text-primary hover:underline font-medium'>En savoir plus sur l'ostéopathie pédiatrique</a>.",
+    "q7": "Combien de temps dure une séance ?",
+    "a7": "Une séance d'ostéopathie dure environ 45 minutes à 1 heure. Ce temps permet un bilan complet, le traitement adapté, et des conseils personnalisés pour prolonger les bienfaits de la séance.",
+    "q8": "Proposez-vous aussi un travail sur les traumatismes émotionnels ?",
+    "a8": "Oui, je propose une approche somatique spécialisée pour la libération des traumatismes corporels et émotionnels. Cette méthode utilise l'ostéopathie biodynamique pour traiter le stress post-traumatique, l'anxiété et les chocs émotionnels. <a href='/trauma' class='text-primary hover:underline font-medium'>Découvrir l'approche trauma</a>.",
+    "cta_question": "Vous avez d'autres questions ?",
+    "cta_subtitle": "N'hésitez pas à me contacter pour toute question supplémentaire",
+    "cta_button": "Prendre rendez-vous"
   }
 }

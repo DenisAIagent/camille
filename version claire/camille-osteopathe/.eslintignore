@@ -1,4 +1,0 @@
-scripts/**
-**/*.js
-!.eslintrc.js
-!next.config.js

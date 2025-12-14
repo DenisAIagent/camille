@@ -3,19 +3,19 @@ import createNextIntlPlugin from 'next-intl/plugin';
 
 const withNextIntl = createNextIntlPlugin('./i18n/request.ts');
 
-// Content Security Policy
+// Content Security Policy - Hardened for production security
 const ContentSecurityPolicy = `
   default-src 'self';
-  script-src 'self' 'unsafe-eval' 'unsafe-inline' https://js.hcaptcha.com https://*.hcaptcha.com;
+  script-src 'self' 'unsafe-inline' https://js.hcaptcha.com https://*.hcaptcha.com https://www.googletagmanager.com https://www.google-analytics.com;
   style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-  img-src 'self' blob: data: https:;
+  img-src 'self' blob: data: https: www.google-analytics.com;
   font-src 'self' https://fonts.gstatic.com data:;
-  connect-src 'self' https://hcaptcha.com https://*.hcaptcha.com;
+  connect-src 'self' https://hcaptcha.com https://*.hcaptcha.com https://www.google-analytics.com https://analytics.google.com;
   frame-src 'self' https://hcaptcha.com https://*.hcaptcha.com https://www.google.com;
   object-src 'none';
   base-uri 'self';
   form-action 'self';
-  frame-ancestors 'self';
+  frame-ancestors 'none';
   upgrade-insecure-requests;
 `.replace(/\s{2,}/g, ' ').trim();
 

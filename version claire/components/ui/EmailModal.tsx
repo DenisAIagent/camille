@@ -18,7 +18,8 @@ export default function EmailModal({ isOpen, onClose }: EmailModalProps) {
         message: ''
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+    const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error' | 'captcha_required'>('idle');
+    const [errorMessage, setErrorMessage] = useState<string>('');
     const [captchaToken, setCaptchaToken] = useState<string | null>(null);
     const captchaRef = useRef<HCaptcha>(null);
 
@@ -28,13 +29,16 @@ export default function EmailModal({ isOpen, onClose }: EmailModalProps) {
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
 
+        // Client-side validation: Captcha required
         if (isHCaptchaConfigured && !captchaToken) {
-            setSubmitStatus('error');
+            setSubmitStatus('captcha_required');
+            setErrorMessage(t('captchaRequired') || 'Veuillez valider le captcha');
             return;
         }
 
         setIsSubmitting(true);
         setSubmitStatus('idle');
+        setErrorMessage('');
 
         try {
             const response = await fetch('/api/contact', {
@@ -48,13 +52,23 @@ export default function EmailModal({ isOpen, onClose }: EmailModalProps) {
                 }),
             });
 
+            const data = await response.json();
+
             if (!response.ok) {
-                throw new Error('Failed to send message');
+                // Handle specific error messages from server
+                if (response.status === 429) {
+                    throw new Error(data.error || 'Trop de tentatives. Veuillez patienter.');
+                } else if (response.status === 400 && data.error?.includes('captcha')) {
+                    throw new Error('Captcha invalide. Veuillez réessayer.');
+                } else {
+                    throw new Error(data.error || 'Erreur lors de l\'envoi du message');
+                }
             }
 
             setSubmitStatus('success');
             setFormData({ name: '', email: '', message: '' });
             setCaptchaToken(null);
+            setErrorMessage('');
             captchaRef.current?.resetCaptcha();
 
             // Close modal after 2 seconds on success
@@ -63,8 +77,12 @@ export default function EmailModal({ isOpen, onClose }: EmailModalProps) {
                 setSubmitStatus('idle');
             }, 2000);
         } catch (err) {
-            console.error('Error sending message:', err);
+            const error = err as Error;
+            if (process.env.NODE_ENV === 'development') {
+                console.error('[DEV] Error sending message:', error.message);
+            }
             setSubmitStatus('error');
+            setErrorMessage(error.message || t('error') || 'Une erreur est survenue');
             setCaptchaToken(null);
             captchaRef.current?.resetCaptcha();
         } finally {
@@ -178,13 +196,18 @@ export default function EmailModal({ isOpen, onClose }: EmailModalProps) {
 
                                 {/* hCaptcha */}
                                 {isHCaptchaConfigured ? (
-                                    <div className="flex justify-center py-2">
+                                    <div className={`flex flex-col items-center py-2 ${submitStatus === 'captcha_required' ? 'ring-2 ring-red-500 rounded-lg p-2' : ''}`}>
                                         <HCaptcha
                                             ref={captchaRef}
                                             sitekey={hcaptchaSiteKey!}
                                             onVerify={onCaptchaVerify}
                                             onExpire={onCaptchaExpire}
                                         />
+                                        {submitStatus === 'captcha_required' && (
+                                            <p className="text-sm text-red-600 mt-2 animate-fade-in">
+                                                {errorMessage}
+                                            </p>
+                                        )}
                                     </div>
                                 ) : (
                                     <div className="p-4 bg-yellow-50 dark:bg-yellow-900/30 border-2 border-yellow-200 dark:border-yellow-700 rounded-lg text-sm text-yellow-800 dark:text-yellow-200">
@@ -210,7 +233,7 @@ export default function EmailModal({ isOpen, onClose }: EmailModalProps) {
                                 )}
                                 {submitStatus === 'error' && (
                                     <p className="text-sm text-red-600 text-center animate-fade-in font-medium">
-                                        ✗ {t('error')}
+                                        ✗ {errorMessage || t('error')}
                                     </p>
                                 )}
                             </form>

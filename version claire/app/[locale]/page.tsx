@@ -13,9 +13,9 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const _t = await getTranslations({ locale, namespace: 'HomePage' });
 
   const titles = {
-    fr: 'Ostéopathe Lisbonne | Camille Labasse - Cabinet Avenida de Roma',
-    pt: 'Osteopata Lisboa | Camille Labasse - Consultório Avenida de Roma',
-    en: 'Osteopath Lisbon | Camille Labasse - Avenida de Roma Practice'
+    fr: 'Ostéopathe Lisbonne | Camille Labasse D.O.',
+    pt: 'Osteopata Lisboa | Camille Labasse D.O.',
+    en: 'Osteopath Lisbon | Camille Labasse D.O.'
   };
 
   const descriptions = {
@@ -58,14 +58,6 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       index: true,
       follow: true,
     },
-    alternates: {
-      canonical: `https://camille-osteopathe.com/${locale}`,
-      languages: {
-        'fr': 'https://camille-osteopathe.com/fr',
-        'pt': 'https://camille-osteopathe.com/pt',
-        'en': 'https://camille-osteopathe.com/en',
-      },
-    },
   };
 }
 
@@ -85,7 +77,7 @@ export default function HomePage() {
             "image": "https://camille-osteopathe.com/images/photos/camille-24%20-%20Grande.webp",
             "@id": "https://camille-osteopathe.com",
             "url": "https://camille-osteopathe.com",
-            "telephone": "+351912345678", // À remplacer par le vrai numéro si disponible
+            "telephone": "+351930505939",
             "address": {
               "@type": "PostalAddress",
               "streetAddress": "Avenida de Roma",
@@ -121,17 +113,19 @@ export default function HomePage() {
 
       {/* Hero Section - Parallax avec image de fond */}
       <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden parallax-container pb-16">
-        {/* Background Image avec parallax */}
-        <div
-          className="absolute inset-0 z-0"
-          style={{
-            backgroundImage: 'url(/images/photos/camille-01%20-%20Grande.jpeg)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundAttachment: 'fixed'
-          }}
-        >
-          <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/60 to-background"></div>
+        {/* Background Image optimisée avec Next.js Image */}
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/images/photos/camille-01 - Grande.webp"
+            alt="Camille Labasse Ostéopathe - Cabinet Lisbonne"
+            fill
+            priority
+            fetchPriority="high"
+            quality={85}
+            sizes="100vw"
+            className="object-cover object-center"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/60 to-background z-[1]"></div>
         </div>
 
         {/* Hero Content */}
@@ -180,10 +174,10 @@ export default function HomePage() {
                 <Image
                   src="/images/photos/camille-24 - Grande.webp"
                   alt="Camille Labasse - Ostéopathe"
-                  width={800}
-                  height={1200}
-                  quality={90}
-                  priority
+                  width={665}
+                  height={443}
+                  quality={75}
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   className="w-full h-auto object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-smooth"></div>
@@ -274,17 +268,17 @@ export default function HomePage() {
 
       {/* CTA Final - Premium */}
       <section className="py-32 relative overflow-hidden">
-        {/* Background with image */}
-        <div
-          className="absolute inset-0 z-0"
-          style={{
-            backgroundImage: 'url(/images/photos/camille-50%20-%20Grande.jpeg)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundAttachment: 'fixed'
-          }}
-        >
-          <div className="absolute inset-0 bg-black/75 dark:bg-black/85"></div>
+        {/* Background with image optimisée */}
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/images/photos/camille-50 - Grande.webp"
+            alt="Cabinet Camille Labasse"
+            fill
+            quality={85}
+            sizes="100vw"
+            className="object-cover object-center"
+          />
+          <div className="absolute inset-0 bg-black/75 dark:bg-black/85 z-[1]"></div>
         </div>
 
         <div className="container mx-auto px-4 text-center relative z-10">

@@ -1,15 +1,47 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
+import { z } from 'zod';
+import { contactRateLimiter, contactHourlyLimiter } from '@/lib/redis';
 
-interface ContactFormData {
-    name: string;
-    email: string;
-    message: string;
-    captchaToken: string;
+// Zod schema for strong validation
+const contactFormSchema = z.object({
+    name: z.string()
+        .min(2, 'Name must be at least 2 characters')
+        .max(100, 'Name is too long')
+        .trim()
+        .regex(/^[a-zA-ZÀ-ÿ\s'-]+$/, 'Name contains invalid characters'),
+    email: z.string()
+        .email('Invalid email address')
+        .max(255, 'Email is too long')
+        .toLowerCase()
+        .trim(),
+    message: z.string()
+        .min(10, 'Message must be at least 10 characters')
+        .max(5000, 'Message is too long')
+        .trim(),
+    captchaToken: z.string()
+        .min(1, 'Captcha token is required'),
+});
+
+// HTML escape function to prevent XSS in email templates
+function escapeHtml(text: string): string {
+    const map: { [key: string]: string } = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;',
+    };
+    return text.replace(/[&<>"']/g, (m) => map[m]);
 }
 
-// Email HTML Template
+// Email HTML Template with escaped content
 function getEmailTemplate(name: string, email: string, message: string): string {
+    // Escape all user-provided content
+    const safeName = escapeHtml(name);
+    const safeEmail = escapeHtml(email);
+    const safeMessage = escapeHtml(message);
+
     return `
 <!DOCTYPE html>
 <html lang="fr">
@@ -34,7 +66,7 @@ function getEmailTemplate(name: string, email: string, message: string): string 
                             </p>
                         </td>
                     </tr>
-                    
+
                     <!-- Content -->
                     <tr>
                         <td style="padding: 40px;">
@@ -43,27 +75,27 @@ function getEmailTemplate(name: string, email: string, message: string): string 
                                 <tr>
                                     <td style="padding: 15px; background-color: #f3f4f1; border-radius: 8px;">
                                         <p style="margin: 0 0 8px 0; font-size: 12px; color: #6a6546; text-transform: uppercase; font-weight: 600; letter-spacing: 0.5px;">Expéditeur</p>
-                                        <p style="margin: 0; font-size: 18px; color: #2a2c25; font-weight: 600;">${name}</p>
+                                        <p style="margin: 0; font-size: 18px; color: #2a2c25; font-weight: 600;">${safeName}</p>
                                         <p style="margin: 8px 0 0 0; font-size: 14px; color: #EE6A22;">
-                                            <a href="mailto:${email}" style="color: #EE6A22; text-decoration: none;">${email}</a>
+                                            <a href="mailto:${safeEmail}" style="color: #EE6A22; text-decoration: none;">${safeEmail}</a>
                                         </p>
                                     </td>
                                 </tr>
                             </table>
-                            
+
                             <!-- Message -->
                             <div style="margin-bottom: 30px;">
                                 <p style="margin: 0 0 12px 0; font-size: 12px; color: #6a6546; text-transform: uppercase; font-weight: 600; letter-spacing: 0.5px;">Message</p>
                                 <div style="padding: 20px; background-color: #f9f9f8; border-left: 4px solid #EE6A22; border-radius: 4px;">
-                                    <p style="margin: 0; font-size: 15px; line-height: 1.6; color: #2a2c25; white-space: pre-wrap;">${message}</p>
+                                    <p style="margin: 0; font-size: 15px; line-height: 1.6; color: #2a2c25; white-space: pre-wrap;">${safeMessage}</p>
                                 </div>
                             </div>
-                            
+
                             <!-- Action Button -->
                             <table role="presentation" style="width: 100%; border-collapse: collapse;">
                                 <tr>
                                     <td align="center" style="padding: 20px 0;">
-                                        <a href="mailto:${email}?subject=Re: Votre demande de contact" 
+                                        <a href="mailto:${safeEmail}?subject=Re: Votre demande de contact"
                                            style="display: inline-block; padding: 14px 32px; background: linear-gradient(135deg, #EE6A22 0%, #F2AF1D 100%); color: #ffffff; text-decoration: none; border-radius: 50px; font-weight: 600; font-size: 15px; box-shadow: 0 4px 12px rgba(238, 106, 34, 0.3);">
                                             Répondre par email
                                         </a>
@@ -72,7 +104,7 @@ function getEmailTemplate(name: string, email: string, message: string): string 
                             </table>
                         </td>
                     </tr>
-                    
+
                     <!-- Footer -->
                     <tr>
                         <td style="padding: 30px 40px; text-align: center; border-top: 1px solid #e5e5e5; background-color: #fafafa; border-radius: 0 0 12px 12px;">
@@ -97,52 +129,135 @@ function getEmailTemplate(name: string, email: string, message: string): string 
     `.trim();
 }
 
+// Helper function for fetch with timeout
+async function fetchWithTimeout(url: string, options: RequestInit, timeoutMs: number = 10000): Promise<Response> {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), timeoutMs);
+
+    try {
+        const response = await fetch(url, {
+            ...options,
+            signal: controller.signal,
+        });
+        return response;
+    } finally {
+        clearTimeout(timeout);
+    }
+}
+
 export async function POST(request: NextRequest) {
     try {
-        const body: ContactFormData = await request.json();
-        const { name, email, message, captchaToken } = body;
+        // Get client IP for rate limiting
+        const ip = request.headers.get('x-forwarded-for')?.split(',')[0] ||
+                   request.headers.get('x-real-ip') ||
+                   'anonymous';
 
-        // Validate required fields
-        if (!name || !email || !message || !captchaToken) {
+        // Apply rate limiting (only if Redis is configured)
+        if (contactRateLimiter && contactHourlyLimiter) {
+            // Check short-term limit (3 requests per 10 seconds)
+            const { success: shortTermSuccess, reset: shortTermReset } = await contactRateLimiter.limit(ip);
+
+            if (!shortTermSuccess) {
+                const waitSeconds = Math.ceil((shortTermReset - Date.now()) / 1000);
+                return NextResponse.json(
+                    {
+                        error: 'Too many requests. Please wait before trying again.',
+                        retryAfter: waitSeconds
+                    },
+                    {
+                        status: 429,
+                        headers: {
+                            'Retry-After': waitSeconds.toString(),
+                            'X-RateLimit-Limit': '3',
+                            'X-RateLimit-Remaining': '0',
+                        }
+                    }
+                );
+            }
+
+            // Check hourly limit (10 requests per hour)
+            const { success: hourlySuccess, reset: hourlyReset } = await contactHourlyLimiter.limit(ip);
+
+            if (!hourlySuccess) {
+                const waitSeconds = Math.ceil((hourlyReset - Date.now()) / 1000);
+                return NextResponse.json(
+                    {
+                        error: 'Hourly limit exceeded. Please try again later.',
+                        retryAfter: waitSeconds
+                    },
+                    {
+                        status: 429,
+                        headers: {
+                            'Retry-After': waitSeconds.toString(),
+                            'X-RateLimit-Limit': '10',
+                            'X-RateLimit-Remaining': '0',
+                        }
+                    }
+                );
+            }
+        }
+
+        // Parse and validate request body
+        const body = await request.json();
+
+        // Validate with Zod
+        const validationResult = contactFormSchema.safeParse(body);
+
+        if (!validationResult.success) {
             return NextResponse.json(
-                { error: 'Missing required fields' },
+                {
+                    error: 'Validation error',
+                    details: validationResult.error.issues[0].message
+                },
                 { status: 400 }
             );
         }
 
-        // Basic email validation
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            return NextResponse.json(
-                { error: 'Invalid email address' },
-                { status: 400 }
-            );
-        }
+        const { name, email, message, captchaToken } = validationResult.data;
 
-        // Verify hCaptcha token
+        // Verify hCaptcha token with timeout
         const hcaptchaSecret = process.env.HCAPTCHA_SECRET_KEY;
 
         if (!hcaptchaSecret) {
-            console.error('HCAPTCHA_SECRET_KEY is not configured');
+            // Log error without exposing to client
+            if (process.env.NODE_ENV === 'development') {
+                console.error('[DEV] HCAPTCHA_SECRET_KEY is not configured');
+            }
             return NextResponse.json(
                 { error: 'Server configuration error' },
                 { status: 500 }
             );
         }
 
-        const verifyResponse = await fetch('https://hcaptcha.com/siteverify', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: `secret=${hcaptchaSecret}&response=${captchaToken}`,
-        });
+        let verifyResponse;
+        try {
+            verifyResponse = await fetchWithTimeout(
+                'https://hcaptcha.com/siteverify',
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `secret=${hcaptchaSecret}&response=${captchaToken}`,
+                },
+                10000 // 10 second timeout
+            );
+        } catch (error) {
+            // Don't log sensitive data in production
+            if (process.env.NODE_ENV === 'development') {
+                console.error('[DEV] hCaptcha verification timeout or error:', error);
+            }
+            return NextResponse.json(
+                { error: 'Captcha verification failed' },
+                { status: 500 }
+            );
+        }
 
         const verifyData = await verifyResponse.json();
 
         if (!verifyData.success) {
             return NextResponse.json(
-                { error: 'Invalid captcha' },
+                { error: 'Invalid captcha. Please try again.' },
                 { status: 400 }
             );
         }
@@ -152,9 +267,11 @@ export async function POST(request: NextRequest) {
         const contactEmail = process.env.CONTACT_EMAIL || 'contact@camille-osteopathe.com';
 
         if (!resendApiKey) {
-            console.error('RESEND_API_KEY is not configured');
-            // Log locally for development
-            console.log('📧 Contact Form (Development Mode):', { name, email, message });
+            // Development mode - don't log sensitive data
+            if (process.env.NODE_ENV === 'development') {
+                console.log('[DEV] Contact form submitted (RESEND_API_KEY not configured)');
+                console.log('[DEV] Name length:', name.length, '| Email domain:', email.split('@')[1]);
+            }
             return NextResponse.json(
                 {
                     success: true,
@@ -167,6 +284,7 @@ export async function POST(request: NextRequest) {
 
         const resend = new Resend(resendApiKey);
 
+        // Send email with text fallback (all content is HTML-escaped)
         const { data, error } = await resend.emails.send({
             from: 'Site Web <noreply@camille-osteopathe.com>',
             to: [contactEmail],
@@ -188,28 +306,36 @@ Cet email a été envoyé depuis le formulaire de contact sur camille-osteopathe
         });
 
         if (error) {
-            console.error('Resend API Error:', error);
+            // Log error without sensitive data
+            if (process.env.NODE_ENV === 'development') {
+                console.error('[DEV] Resend API Error:', error);
+            }
             return NextResponse.json(
-                { error: 'Failed to send email' },
+                { error: 'Failed to send email. Please try again.' },
                 { status: 500 }
             );
         }
 
-        console.log('✅ Email sent successfully:', data);
+        // Success - only log in development, no sensitive data
+        if (process.env.NODE_ENV === 'development') {
+            console.log('[DEV] Email sent successfully, ID:', data?.id);
+        }
 
         return NextResponse.json(
             {
                 success: true,
                 message: 'Message envoyé avec succès',
-                emailId: data?.id
             },
             { status: 200 }
         );
 
     } catch (error) {
-        console.error('Error processing contact form:', error);
+        // Generic error handling without exposing details
+        if (process.env.NODE_ENV === 'development') {
+            console.error('[DEV] Error processing contact form:', error);
+        }
         return NextResponse.json(
-            { error: 'Internal server error' },
+            { error: 'An error occurred. Please try again later.' },
             { status: 500 }
         );
     }

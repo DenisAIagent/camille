@@ -39,5 +39,4 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-RAPPORT_NETTOYAGE.md
-version claire/RAPPORT_NETTOYAGE.md
+.claude/

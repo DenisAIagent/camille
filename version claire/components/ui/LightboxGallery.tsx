@@ -15,6 +15,8 @@ export default function LightboxGallery({ images, basePath = '/images/photos/' }
     const [mounted, setMounted] = useState(false);
     const [direction, setDirection] = useState<'next' | 'prev' | null>(null);
     const [imageLoading, setImageLoading] = useState(true);
+    const [touchStart, setTouchStart] = useState<{ x: number; y: number } | null>(null);
+    const [touchEnd, setTouchEnd] = useState<{ x: number; y: number } | null>(null);
 
     useEffect(() => {
         // Pattern standard React Portal - Nécessaire pour éviter les erreurs d'hydratation SSR
@@ -62,6 +64,47 @@ export default function LightboxGallery({ images, basePath = '/images/photos/' }
             prev !== null ? (prev === images.length - 1 ? 0 : prev + 1) : null
         );
     }, [images.length]);
+
+    // Gestion du swipe tactile pour mobile
+    const minSwipeDistance = 50;
+
+    const onTouchStart = (e: React.TouchEvent) => {
+        setTouchEnd(null);
+        setTouchStart({
+            x: e.targetTouches[0].clientX,
+            y: e.targetTouches[0].clientY
+        });
+    };
+
+    const onTouchMove = (e: React.TouchEvent) => {
+        setTouchEnd({
+            x: e.targetTouches[0].clientX,
+            y: e.targetTouches[0].clientY
+        });
+    };
+
+    const onTouchEnd = () => {
+        if (!touchStart || !touchEnd) return;
+
+        const distanceX = touchStart.x - touchEnd.x;
+        const distanceY = touchStart.y - touchEnd.y;
+
+        const isLeftSwipe = distanceX > minSwipeDistance;
+        const isRightSwipe = distanceX < -minSwipeDistance;
+        const isDownSwipe = distanceY < -minSwipeDistance;
+
+        // Priorité au swipe vertical (fermer) si détecté
+        if (isDownSwipe && Math.abs(distanceY) > Math.abs(distanceX)) {
+            onClose();
+        } else if (isLeftSwipe) {
+            onNext();
+        } else if (isRightSwipe) {
+            onPrev();
+        }
+
+        setTouchStart(null);
+        setTouchEnd(null);
+    };
 
     // Navigation clavier
     useEffect(() => {
@@ -114,6 +157,9 @@ export default function LightboxGallery({ images, basePath = '/images/photos/' }
                 <div
                     className="relative w-full h-full max-w-[95vw] max-h-[90vh] p-4 md:p-8"
                     onClick={(e) => e.stopPropagation()}
+                    onTouchStart={onTouchStart}
+                    onTouchMove={onTouchMove}
+                    onTouchEnd={onTouchEnd}
                 >
                     {/* Loading indicator */}
                     {imageLoading && (
@@ -142,8 +188,8 @@ export default function LightboxGallery({ images, basePath = '/images/photos/' }
             </div>
 
             {/* Instructions pour mobile */}
-            <div className="absolute bottom-24 left-1/2 -translate-x-1/2 text-white/60 text-sm md:hidden">
-                Glissez pour naviguer
+            <div className="absolute bottom-24 left-1/2 -translate-x-1/2 text-white/60 text-sm md:hidden text-center">
+                Glissez horizontalement pour naviguer<br />Glissez vers le bas pour fermer
             </div>
         </div>
     );
@@ -167,9 +213,11 @@ export default function LightboxGallery({ images, basePath = '/images/photos/' }
                         <Image
                             src={`${basePath}${photo}`}
                             alt={`Cabinet Camille Labasse ${index + 1}`}
-                            width={400}
-                            height={400}
-                            quality={85}
+                            width={478}
+                            height={319}
+                            quality={70}
+                            sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 25vw"
+                            loading="lazy"
                             className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-out"
                         />
                     </div>

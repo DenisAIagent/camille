@@ -78,7 +78,7 @@
     },
     "Contact": {
         "email": "camille@osteopathe-lisbonne.com",
-        "whatsapp": "351912345678",
+        "whatsapp": "351930505939",
         "whatsappMessage": "Hello, I would like to book an osteopathy appointment."
     },
     "ContactModals": {
@@ -108,5 +108,28 @@
             "error": "Error sending. Please try again.",
             "close": "Close"
         }
+    },
+    "FAQPage": {
+        "h1": "Frequently Asked Questions",
+        "subtitle": "Everything you need to know about osteopathy in Lisbon",
+        "q1": "What is osteopathy?",
+        "a1": "Osteopathy is a manual therapeutic approach that aims to restore the body's natural balance. It treats mobility dysfunctions of tissues that can alter health. <a href='/osteopathie' class='text-primary hover:underline font-medium'>Learn more about osteopathy</a>.",
+        "q2": "How many sessions are needed?",
+        "a2": "The number of sessions varies for each person and the nature of the problem. Generally, 1 to 3 sessions are sufficient for acute problems, while chronic issues may require longer follow-up. Each case is evaluated individually during the first consultation.",
+        "q3": "How much does an osteopathy session cost?",
+        "a3": "A consultation costs 60€. Reduced rate of 50€ for babies under 1 year and unemployed people. <a href='/contact' class='text-primary hover:underline font-medium'>See all rates and book an appointment</a>.",
+        "q4": "Is osteopathy reimbursed?",
+        "a4": "I am not affiliated with any health insurance. However, I provide a detailed invoice that you can submit yourself to your insurance to request partial reimbursement, according to your contract.",
+        "q5": "For what types of problems can I consult?",
+        "a5": "Osteopathy treats many disorders: musculoskeletal pain, migraines, digestive disorders, stress, insomnia, vertigo, tinnitus, menstrual disorders, and much more. <a href='/osteopathie' class='text-primary hover:underline font-medium'>Discover all treated disorders</a>.",
+        "q6": "Is osteopathy suitable for babies and pregnant women?",
+        "a6": "Yes, absolutely! Osteopathy uses very gentle and safe techniques, perfectly adapted for babies (colic, sleep disorders, plagiocephaly) and pregnant women (lower back pain, childbirth preparation). <a href='/osteopathie' class='text-primary hover:underline font-medium'>Learn more about pediatric osteopathy</a>.",
+        "q7": "How long does a session last?",
+        "a7": "An osteopathy session lasts approximately 45 minutes to 1 hour. This time allows for a complete assessment, adapted treatment, and personalized advice to prolong the benefits of the session.",
+        "q8": "Do you also offer work on emotional trauma?",
+        "a8": "Yes, I offer a specialized somatic approach for releasing physical and emotional trauma. This method uses biodynamic osteopathy to treat post-traumatic stress, anxiety and emotional shocks. <a href='/trauma' class='text-primary hover:underline font-medium'>Discover the trauma approach</a>.",
+        "cta_question": "Do you have other questions?",
+        "cta_subtitle": "Feel free to contact me for any additional questions",
+        "cta_button": "Book an appointment"
     }
 }

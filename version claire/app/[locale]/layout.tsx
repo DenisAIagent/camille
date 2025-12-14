@@ -13,17 +13,36 @@ import { Toaster } from "sonner";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
 
-const outfit = Outfit({ subsets: ['latin'], variable: '--font-sans' });
-const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-serif' });
-const jetbrainsMono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-geist-mono' });
+const outfit = Outfit({
+  subsets: ['latin'],
+  variable: '--font-sans',
+  display: 'swap',
+  preload: true,
+  adjustFontFallback: true
+});
+
+const playfair = Playfair_Display({
+  subsets: ['latin'],
+  variable: '--font-serif',
+  display: 'swap',
+  preload: true,
+  adjustFontFallback: true
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-geist-mono',
+  display: 'swap',
+  adjustFontFallback: true
+});
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
 
   const titles = {
-    fr: 'Camille Labasse | Ostéopathe D.O. à Lisbonne',
-    pt: 'Camille Labasse | Osteopata D.O. em Lisboa',
-    en: 'Camille Labasse | Osteopath D.O. in Lisbon'
+    fr: 'Ostéopathe Lisbonne | Camille Labasse D.O.',
+    pt: 'Osteopata Lisboa | Camille Labasse D.O.',
+    en: 'Osteopath Lisbon | Camille Labasse D.O.'
   };
 
   const descriptions = {
@@ -41,9 +60,10 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       template: `%s | Camille Labasse Ostéopathe`
     },
     description,
-    metadataBase: new URL('https://camille-alpha.vercel.app'),
+    metadataBase: new URL(process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
     alternates: {
-      canonical: `/${locale}`,
       languages: {
         'fr': '/fr',
         'pt': '/pt',
@@ -53,24 +73,14 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     openGraph: {
       title,
       description,
-      url: `/${locale}`,
       siteName: 'Camille Labasse Ostéopathe',
       locale: locale,
       type: 'website',
-      images: [
-        {
-          url: '/images/photos/opengraph-image.jpg',
-          width: 1200,
-          height: 630,
-          alt: 'Camille Labasse Ostéopathe Lisbonne',
-        }
-      ],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
-      images: ['/images/photos/opengraph-image.jpg'],
     },
     robots: {
       index: true,

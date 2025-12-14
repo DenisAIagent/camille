@@ -78,7 +78,7 @@
     },
     "Contact": {
         "email": "camille@osteopathe-lisbonne.com",
-        "whatsapp": "351912345678",
+        "whatsapp": "351930505939",
         "whatsappMessage": "Olá, gostaria de marcar uma consulta de osteopatia."
     },
     "ContactModals": {
@@ -108,5 +108,28 @@
             "error": "Erro ao enviar. Por favor, tente novamente.",
             "close": "Fechar"
         }
+    },
+    "FAQPage": {
+        "h1": "Perguntas Frequentes",
+        "subtitle": "Tudo o que precisa saber sobre osteopatia em Lisboa",
+        "q1": "O que é osteopatia?",
+        "a1": "A osteopatia é uma abordagem terapêutica manual que visa restaurar o equilíbrio natural do corpo. Trata disfunções de mobilidade dos tecidos que podem alterar a saúde. <a href='/osteopathie' class='text-primary hover:underline font-medium'>Saiba mais sobre a osteopatia</a>.",
+        "q2": "Quantas sessões são necessárias?",
+        "a2": "O número de sessões varia conforme cada pessoa e a natureza do problema. Geralmente, 1 a 3 sessões são suficientes para problemas agudos, enquanto problemas crônicos podem necessitar de acompanhamento mais longo. Cada caso é avaliado individualmente na primeira consulta.",
+        "q3": "Quanto custa uma sessão de osteopatia?",
+        "a3": "A consulta custa 60€. Tarifa reduzida de 50€ para bebês com menos de 1 ano e pessoas desempregadas. <a href='/contact' class='text-primary hover:underline font-medium'>Ver todas as tarifas e marcar consulta</a>.",
+        "q4": "A osteopatia é reembolsada?",
+        "a4": "Não estou afiliada a nenhum seguro de saúde. No entanto, forneço uma fatura detalhada que pode apresentar você mesmo ao seu seguro para solicitar um reembolso parcial, de acordo com o seu contrato.",
+        "q5": "Para que tipos de problemas posso consultar?",
+        "a5": "A osteopatia trata diversos distúrbios: dores musculoesqueléticas, enxaquecas, distúrbios digestivos, stress, insónia, vertigens, zumbidos, distúrbios menstruais, e muito mais. <a href='/osteopathie' class='text-primary hover:underline font-medium'>Descobrir todos os distúrbios tratados</a>.",
+        "q6": "A osteopatia é adequada para bebês e grávidas?",
+        "a6": "Sim, absolutamente! A osteopatia utiliza técnicas muito suaves e seguras, perfeitamente adaptadas para bebês (cólicas, distúrbios do sono, plagiocefalia) e grávidas (dores lombares, preparação para o parto). <a href='/osteopathie' class='text-primary hover:underline font-medium'>Saiba mais sobre osteopatia pediátrica</a>.",
+        "q7": "Quanto tempo dura uma sessão?",
+        "a7": "Uma sessão de osteopatia dura aproximadamente 45 minutos a 1 hora. Este tempo permite uma avaliação completa, o tratamento adaptado e conselhos personalizados para prolongar os benefícios da sessão.",
+        "q8": "Propõe também trabalho sobre traumas emocionais?",
+        "a8": "Sim, proponho uma abordagem somática especializada para a libertação de traumas corporais e emocionais. Este método utiliza a osteopatia biodinâmica para tratar stress pós-traumático, ansiedade e choques emocionais. <a href='/trauma' class='text-primary hover:underline font-medium'>Descobrir a abordagem trauma</a>.",
+        "cta_question": "Tem outras perguntas?",
+        "cta_subtitle": "Não hesite em contactar-me para qualquer questão adicional",
+        "cta_button": "Marcar consulta"
     }
 }
